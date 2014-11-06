@@ -4,5 +4,9 @@
     <string name="app_name">student</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">jnidemo</string>
-
+    <string name="exception">exception</string>
+    <string name="test1">test1</string>
+    <string name="test2">test2</string>
+    <string name="test3">test3</string>
+     <string name="wifiresult">wifiresult</string>
 </resources>

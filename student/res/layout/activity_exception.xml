@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <ScrollView
+        android:id="@+id/detail_scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
+        android:layout_weight="0.29"
+        android:background="@android:drawable/edit_text"
+        android:scrollbarStyle="outsideInset" >
+
+        <LinearLayout
+            android:id="@+id/detail_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/mTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000" />
+        </LinearLayout>
+    </ScrollView>
+    
+    
+   <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+   
+   <Button 
+       android:id="@+id/mBtn01"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/cp_black"
+       android:text="@string/test1" 
+       />
+   
+    <Button 
+       android:id="@+id/mBtn02"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/cp_black"
+       android:text="@string/test2" 
+       />
+    
+    
+    <Button 
+       android:id="@+id/mBtn03"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/cp_black"
+       android:text="@string/test3" 
+       />
+    
+     <Button 
+       android:id="@+id/mBtn04"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/cp_black"
+       android:text="@string/wifiresult" 
+       />
+     </LinearLayout>
+     
+</LinearLayout>

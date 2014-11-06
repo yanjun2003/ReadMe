@@ -2,8 +2,12 @@ package com.example.student;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.app.Activity;
+import android.content.Intent;
 
 public class MainActivity extends Activity {
     private static final String TAG = "StudentActivity";
@@ -14,6 +18,7 @@ public class MainActivity extends Activity {
 	private float fval;
 	private String str;
 	
+	private Button mButton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -21,6 +26,19 @@ public class MainActivity extends Activity {
 			mTextView =(TextView)findViewById(R.id.mTextView);
 			mTextView.setText(stringFromJNIDynamic() + "\r\n");
 			    
+			mButton=(Button)findViewById(R.id.mButton);
+			mButton.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent();
+		  		    intent.setAction("com.example.student.exception");
+	  			    startActivity(intent);
+				}
+				
+			});
+			
 		    Log.d(TAG, "onCreate");
 	        ival = intFromJni();
 	        Log.d(TAG, "ival="+ival);
@@ -54,8 +72,8 @@ public class MainActivity extends Activity {
 	private native void floatToJni(float val);
 	private native String stringFromJni();
 	private native void stringToJni(String val);
-	private native int getStudentInfoByIndex(Student student, int index);
-
+	private native int getStudentInfoByIndex(Student student, int index);	
+	
 	@Override
 	public void onBackPressed() {
 		finish();

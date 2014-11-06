@@ -28,4 +28,5 @@ public class Student {
     	return "STATIC METHOD";
     }
     public native void sayHello(); 
+   
 }

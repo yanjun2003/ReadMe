@@ -9,6 +9,7 @@
 
 #define JNIMAIN_CLASS "com/example/student/MainActivity"
 #define JNISTUDENT_CLASS "com/example/student/Student"
+#define JNIEXCEPTION_CLASS "com/example/student/exception/ExceptionNDK"
 
 
 #define  TAG    "Student-jni"
@@ -16,7 +17,7 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__)
 
-// jfieldID½á¹¹Ìå£¬ÓÃÓÚ±£´æÀà¡°Student.java¡±µÄfiledID
+
 struct StudentOffsets
 {
     jfieldID    name;
@@ -24,7 +25,7 @@ struct StudentOffsets
     jfieldID    height;
 } gStudentOffsets;
 
-// Óë¡°Student.java¡±¶ÔÓ¦µÄ½á¹¹Ìå£¬ÓÃÓÚ±£´æÊı¾İ£¬²¢½«Êı¾İ¸³Öµ¸øStudent.javaµÄ³ÉÔ±
+
 typedef struct tagStudent
 {
     char    mName[10];
@@ -33,7 +34,7 @@ typedef struct tagStudent
 }Student;
 
 
-// ¶¨ÒåÁË3¸öStudent
+
 static Student gStudent[] = {
     {"skywang", 25, 175},
     {"eman"   , 30, 166},
@@ -42,10 +43,10 @@ static Student gStudent[] = {
 
 #define GSTUDENT_NUM NELEM(gStudent)
 
-JNIEXPORT jint JNICALL Native_getStudentInfoByIndex(JNIEnv *env, jobject clazz, jobject student, jint index)
+JNIEXPORT jint JNICALL Native_getStudentInfoByIndex(JNIEnv *env, jobject thiz, jobject student, jint index)
 {
 
-    // ÈôindexÎŞĞ§£¬ÔòÖ±½Ó·µ»Ø-1¡£
+
     if ((int)index<0 || (int)index>=GSTUDENT_NUM)
         return -1;
 
@@ -73,13 +74,13 @@ static void nativeClassInit (JNIEnv *env)
 
 
 
-JNIEXPORT jstring JNICALL Native_stringFromJni(JNIEnv *env, jobject clazz)
+JNIEXPORT jstring JNICALL Native_stringFromJni(JNIEnv *env, jobject thiz)
 {
     jstring str = (*env)->NewStringUTF(env, "Hello From Jni");
     return str;
 }
 
-JNIEXPORT void JNICALL Native_stringToJni(JNIEnv *env, jobject clazz, jstring val)
+JNIEXPORT void JNICALL Native_stringToJni(JNIEnv *env, jobject thiz, jstring val)
 {
     char *str = (char *)(*env)->GetStringUTFChars(env, val, JNI_FALSE);
     LOGD("%s str=%s\n", __func__, str);
@@ -90,25 +91,25 @@ JNIEXPORT jfloat JNICALL Native_floatFromJni(JNIEnv *env, jobject clazz)
     return (jfloat)1.34;
 }
 
-JNIEXPORT void JNICALL Native_floatToJni(JNIEnv *env, jobject clazz, jfloat val)
+JNIEXPORT void JNICALL Native_floatToJni(JNIEnv *env, jobject thiz, jfloat val)
 {
     float f = (float)val;
     LOGD("%s f=%f\n", __func__, f);
 }
 
-JNIEXPORT jint JNICALL Native_intFromJni(JNIEnv *env, jobject clazz)
+JNIEXPORT jint JNICALL Native_intFromJni(JNIEnv *env, jobject thiz)
 {
     return (jint)25;
 }
 
 
-JNIEXPORT void JNICALL Native_intToJni(JNIEnv *env, jobject clazz, jint val)
+JNIEXPORT void JNICALL Native_intToJni(JNIEnv *env, jobject thiz, jint val)
 {
     int i = (int)val;
     LOGD("%s i=%d\n", __func__, i);
 }
 
-JNIEXPORT jstring JNICALL native_hello(JNIEnv *env, jclass clazz)
+JNIEXPORT jstring JNICALL native_hello(JNIEnv *env, jclass thiz)
 {
 	 LOGI("%s info\n", __func__);
     return (*env)->NewStringUTF(env, "hello All");
@@ -116,63 +117,9 @@ JNIEXPORT jstring JNICALL native_hello(JNIEnv *env, jclass clazz)
 
 
 
-JNIEXPORT void JNICALL Native_sayHello(JNIEnv *env, jobject clazz){
-    jclass student_clazz = (*env)->GetObjectClass(env,clazz);
-    LOGI("%s info\n", __func__);
-    jfieldID fieldID_name = (*env)->GetFieldID(env,student_clazz,"mName","Ljava/lang/String;");
-    jfieldID fieldID_age = (*env)->GetFieldID(env,student_clazz,"mAge","I");
-    jfieldID fieldID_height = (*env)->GetFieldID(env,student_clazz,"mHeight","F");
-    jfieldID fieldID_count = (*env)->GetStaticFieldID(env,student_clazz,"count","I");
-
-    //µÃµ½jmethodID
-    jmethodID getInfoPublic_func=(*env)->GetMethodID(env,student_clazz,"getInfoPublic","()Ljava/lang/String;");
-    jmethodID getInfoPrivate_func=(*env)->GetMethodID(env,student_clazz,"getInfoPrivate","()Ljava/lang/String;");
-    jmethodID getInfoStatic_func=(*env)->GetStaticMethodID(env,student_clazz,"getInfoStatic","(I)Ljava/lang/String;");
-
-
-    //µ÷ÓÃ·½·¨
-    jobject result1 = (*env)->CallObjectMethod(env,clazz,getInfoPublic_func);
-    char *str1 = (char *)(*env)->GetStringUTFChars(env, (jstring)result1, JNI_FALSE);
-    LOGD("Call java public Method result:%s\n",str1);
-
-    jobject result2 = (*env)->CallObjectMethod(env,clazz,getInfoPrivate_func);
-    char *str2 = (char *)(*env)->GetStringUTFChars(env, (jstring)result2, JNI_FALSE);
-    LOGD("Call java private Method result:%s\n",str2  );
-
-    //µÃµ½countÊôĞÔ
-    jint count = (*env)->GetStaticIntField(env,student_clazz,fieldID_count);
-    count++;
-    LOGD("The count is:%d\n",(int)count);
-
-    jobject result3 = (*env)->CallStaticObjectMethod(env,student_clazz,getInfoStatic_func,count);
-    char *str3 = (char *)(*env)->GetStringUTFChars(env, (jstring)result3, JNI_FALSE);
-    LOGD("Call java static method  result:%s\n",str3);
-    //µÃµ½nameÊôĞÔ
-    jobject name = (*env)->GetObjectField(env,clazz,fieldID_name);
-
-    char *str = (char *)(*env)->GetStringUTFChars(env, (jstring)name, JNI_FALSE);
-    LOGD("name:%s\n",str);
-    //µÃµ½ageÊôĞÔ
-    jint age= (*env)->GetIntField(env,clazz,fieldID_age);
-    //µÃµ½heightÊôĞÔ
-    jfloat height= (*env)->GetFloatField(env,clazz,fieldID_height);
-    LOGD("Before modify:age=%d\n", (int)age);
-    //ĞŞ¸ÄnumberÊôĞÔµÄÖµ
-    (*env)->SetIntField(env,clazz,fieldID_age,50);
-    age= (*env)->GetIntField(env,clazz,fieldID_age);
-    LOGD("After modify , The age changed:age=%d\n", (int)age);
- }
-
-/*JNIEXPORT jstring JNICALL  Native_stringFromJNIStatic(JNIEnv* env,jobject thiz) {
-	 LOGI("%s info\n", __func__);
-     LOGD("%s debug\n", __func__);
-     LOGE("%s error\n", __func__);
-	return (*env)->NewStringUTF(env, "Hello yanjun, Good Afternoon !");
-}*/
-
 
 static JNINativeMethod method_table_main[] = {
-    { "stringFromJNIDynamic", "()Ljava/lang/String;", (void*)native_hello },//°ó¶¨
+    { "stringFromJNIDynamic", "()Ljava/lang/String;", (void*)native_hello },
     { "intFromJni", "()I", (void*)Native_intFromJni},
     { "intToJni", "(I)V", (void*)Native_intToJni},
     { "floatFromJni", "()F", (void*)Native_floatFromJni},
@@ -182,9 +129,230 @@ static JNINativeMethod method_table_main[] = {
     { "getStudentInfoByIndex", "(Lcom/example/student/Student;I)I", (void*)Native_getStudentInfoByIndex},
 };
 
+
+
+JNIEXPORT void JNICALL Native_sayHello(JNIEnv *env, jobject thiz){
+    jclass student_clazz = (*env)->GetObjectClass(env,thiz);
+    LOGI("%s info\n", __func__);
+    jfieldID fieldID_name = (*env)->GetFieldID(env,student_clazz,"mName","Ljava/lang/String;");
+    jfieldID fieldID_age = (*env)->GetFieldID(env,student_clazz,"mAge","I");
+    jfieldID fieldID_height = (*env)->GetFieldID(env,student_clazz,"mHeight","F");
+    jfieldID fieldID_count = (*env)->GetStaticFieldID(env,student_clazz,"count","I");
+
+
+    jmethodID getInfoPublic_func=(*env)->GetMethodID(env,student_clazz,"getInfoPublic","()Ljava/lang/String;");
+    jmethodID getInfoPrivate_func=(*env)->GetMethodID(env,student_clazz,"getInfoPrivate","()Ljava/lang/String;");
+    jmethodID getInfoStatic_func=(*env)->GetStaticMethodID(env,student_clazz,"getInfoStatic","(I)Ljava/lang/String;");
+
+
+
+    jobject result1 = (*env)->CallObjectMethod(env,thiz,getInfoPublic_func);
+    char *str1 = (char *)(*env)->GetStringUTFChars(env, (jstring)result1, JNI_FALSE);
+    LOGD("Call java public Method result:%s\n",str1);
+
+    jobject result2 = (*env)->CallObjectMethod(env,thiz,getInfoPrivate_func);
+    char *str2 = (char *)(*env)->GetStringUTFChars(env, (jstring)result2, JNI_FALSE);
+    LOGD("Call java private Method result:%s\n",str2  );
+
+
+    jint count = (*env)->GetStaticIntField(env,student_clazz,fieldID_count);
+    count++;
+    LOGD("The count is:%d\n",(int)count);
+
+    jobject result3 = (*env)->CallStaticObjectMethod(env,student_clazz,getInfoStatic_func,count);
+    char *str3 = (char *)(*env)->GetStringUTFChars(env, (jstring)result3, JNI_FALSE);
+    LOGD("Call java static method  result:%s\n",str3);
+
+    jobject name = (*env)->GetObjectField(env,thiz,fieldID_name);
+
+    char *str = (char *)(*env)->GetStringUTFChars(env, (jstring)name, JNI_FALSE);
+    LOGD("name:%s\n",str);
+
+    jint age= (*env)->GetIntField(env,thiz,fieldID_age);
+
+    jfloat height= (*env)->GetFloatField(env,thiz,fieldID_height);
+    LOGD("Before modify:age=%d\n", (int)age);
+
+   (*env)->SetIntField(env,thiz,fieldID_age,50);
+    age= (*env)->GetIntField(env,thiz,fieldID_age);
+    LOGD("After modify , The age changed:age=%d\n", (int)age);
+ }
+
+
 static JNINativeMethod method_table_student[] = {
    {"sayHello", "()V", (void*)Native_sayHello},
 };
+
+
+
+
+
+
+
+
+JNIEXPORT jstring JNICALL Native_showException  (JNIEnv *env, jobject thiz, jint index){
+	jclass exceptionNDK_clazz = (*env)->GetObjectClass(env,thiz);
+	jmethodID jni_call_back_id=(*env)->GetMethodID(env,exceptionNDK_clazz,"jni_call_back","(I)V");
+
+	 LOGD("In  Native_showException, the index is %d\n", (int)index);
+
+	(*env)->CallVoidMethod(env,thiz,jni_call_back_id,index);
+
+	if((*env)->ExceptionCheck(env))  {
+		//jclass exception_clazz;
+		(*env)->ExceptionDescribe(env);
+		(*env)->ExceptionClear(env);
+	/*	exception_clazz = (*env)->FindClass(env,"java/IllegalArgumentException");
+		if(exception_clazz==NULL){
+			 LOGE("In %s IllegalArgumentException not found !\n", __func__);
+			 return   (*env)->NewStringUTF(env, "catch exception");
+		}
+		(*env)->ThrowNew(env,exception_clazz,"thrown for C code!");*/
+
+		return (*env)->NewStringUTF(env, "catch exception !\n");
+	}else{
+		return (*env)->NewStringUTF(env, "not catch exception!\n");
+	}
+}
+
+
+JNIEXPORT void JNICALL Native_doit(JNIEnv *env, jobject thiz){
+	jthrowable exc;
+	jclass clazz=(*env)->GetObjectClass(env,thiz);
+	jmethodID callback_id= (*env)->GetMethodID(env,clazz,"callback","()V");
+	if(callback_id==NULL){
+		 LOGD("In %s,  callback_id is null!\n", __func__);
+		 return;
+	}
+	if(exc){
+		jclass exception_clazz;
+		(*env)->ExceptionDescribe(env);
+		(*env)->ExceptionClear(env);
+		exception_clazz = (*env)->FindClass(env,"java/lang/IllegalArgumentException");
+		if(exception_clazz==NULL){
+			 LOGD("In %s,  IllegalArgumentException is not found!\n", __func__);
+				 return;
+		}else{
+			(*env)->ThrowNew(env,exception_clazz,"throw the IllegalArgumentException in C-Code ");
+		}
+	}else{
+		 LOGD("In %s,  callback throw is not happenedl!\n", __func__);
+	     return;
+	}
+
+}
+
+
+JNIEXPORT jstring JNICALL Native_test(JNIEnv *env, jobject thiz){
+	//return (*env)->NewStringUTF(env, "not catch exception!\n");
+	return (*env)->NewStringUTF(env, "wifi resut test !\n");
+}
+
+JNIEXPORT jobjectArray JNICALL Native_testArray (JNIEnv *env, jobject thiz){
+		jobjectArray ret;
+	    int i;
+
+	    char *message[5]= {"first",
+		"second",
+		"third",
+		"fourth",
+		"fifth"};
+
+	    ret= (jobjectArray)(*env)->NewObjectArray(env,5,
+	         (*env)->FindClass(env,"java/lang/String"),
+	         (*env)->NewStringUTF(env,""));
+
+	    for(i=0;i<5;i++) {
+	        (*env)->SetObjectArrayElement(env,
+			ret,i,(*env)->NewStringUTF(env,message[i]));
+	    }
+	    return(ret);
+}
+
+JNIEXPORT jobject JNICALL Native_testObject (JNIEnv *env, jobject thiz)
+{
+	jclass m_cls  = (*env)->FindClass(env,"com/example/student/exception/ScanResult");
+	jmethodID mid = (*env)->GetMethodID(env,m_cls,"<init>","()V");
+	jobject obj   = (*env)->NewObject(env,m_cls,mid);
+
+	jfieldID fid_ssid  = (*env)->GetFieldID(env,m_cls,"ssid","Ljava/lang/String;");
+	jfieldID fid_mac   = (*env)->GetFieldID(env,m_cls,"mac","Ljava/lang/String;");
+	jfieldID fid_level = (*env)->GetFieldID(env,m_cls,"level","I");
+
+	(*env)->SetObjectField(env,obj,fid_ssid,(*env)->NewStringUTF(env,"AP1"));
+	(*env)->SetObjectField(env,obj,fid_mac,(*env)->NewStringUTF(env,"00-11-22-33-44-55"));
+	(*env)->SetIntField(env,obj,fid_level,-66);
+	return obj;
+}
+
+JNIEXPORT jobjectArray JNICALL Native_getScanResultsA (JNIEnv *env, jobject thiz)
+{
+    int i;
+	jclass cls_array=(*env)->FindClass(env,"java/lang/Object");
+	jobjectArray obj_array=(*env)->NewObjectArray(env,2,cls_array,0);
+
+	jclass cls_obj = (*env)->FindClass(env,"com/example/student/exception/ScanResult");
+	jmethodID m    = (*env)->GetMethodID(env,cls_obj,"<init>","()V");
+
+	jfieldID fid_ssid  = (*env)->GetFieldID(env,cls_obj,"ssid","Ljava/lang/String;");
+	jfieldID fid_mac   = (*env)->GetFieldID(env,cls_obj,"mac","Ljava/lang/String;");
+	jfieldID fid_level = (*env)->GetFieldID(env,cls_obj,"level","I");
+
+	for(i=0;i<2;i++)
+	{
+		jobject obj=(*env)->NewObject(env,cls_obj,m);
+
+		jobject o1=(*env)->NewStringUTF(env,"AP2");
+		(*env)->SetObjectField(env,obj,fid_ssid,o1);
+
+		jobject o2=(*env)->NewStringUTF(env,"22-22-22-22-22-22");
+		(*env)->SetObjectField(env,obj,fid_mac,o2);
+
+		(*env)->SetIntField(env,obj,fid_level,-66);
+
+		(*env)->SetObjectArrayElement(env,obj_array,i,obj);
+	}
+	return obj_array;
+}
+
+
+JNIEXPORT jobject JNICALL Native_getScanResults (JNIEnv *env,  jobject thiz){
+
+	jclass m_cls_list    = (*env)->FindClass(env,"java/util/ArrayList");
+	jmethodID m_mid_list = (*env)->GetMethodID(env,m_cls_list,"<init>","()V");
+	jobject m_obj_list   = (*env)->NewObject(env,m_cls_list,m_mid_list);
+
+	jmethodID m_mid_add  = (*env)->GetMethodID(env,m_cls_list,"add","(Ljava/lang/Object;)Z");
+
+	jclass m_cls_result    = (*env)->FindClass(env,"com/example/student/exception/ScanResult");
+	jmethodID m_mid_result = (*env)->GetMethodID(env,m_cls_result,"<init>","()V");
+	jobject m_obj_result   = (*env)->NewObject(env,m_cls_result,m_mid_result);
+
+	jfieldID m_fid_1 = (*env)->GetFieldID(env,m_cls_result,"ssid","Ljava/lang/String;");
+	jfieldID m_fid_2 = (*env)->GetFieldID(env,m_cls_result,"mac","Ljava/lang/String;");
+	jfieldID m_fid_3 = (*env)->GetFieldID(env,m_cls_result,"level","I");
+
+	(*env)->SetObjectField(env,m_obj_result,m_fid_1,(*env)->NewStringUTF(env,"AP6"));
+	(*env)->SetObjectField(env,m_obj_result,m_fid_2,(*env)->NewStringUTF(env,"66-66-66-66-66-66"));
+	(*env)->SetIntField(env,m_obj_result,m_fid_3,-66);
+
+	(*env)->CallBooleanMethod(env,m_obj_list,m_mid_add,m_obj_result);
+
+	return m_obj_list;
+}
+
+
+static JNINativeMethod method_table_exception[] = {
+   {"showException", "(I)Ljava/lang/String;", (void*)Native_showException},
+   {"doit", "()V", (void*)Native_doit},
+   {"test", "()Ljava/lang/String;", (void*)Native_test},
+   {"testArray", "()[Ljava/lang/String;", (void*)Native_testArray},
+   {"testObject", "()Lcom/example/student/exception/ScanResult;", (void*)Native_testObject},
+   {"getScanResultsA", "()[Lcom/example/student/exception/ScanResult;", (void*)Native_getScanResultsA},
+   {"getScanResults", "()Ljava/util/List;", (void*)Native_getScanResults},
+};
+
+
 
 static int registerNativeMethods(JNIEnv* env, const char* className,
         JNINativeMethod* gMethods, int numMethods)
@@ -204,12 +372,18 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
 int register_ndk_load(JNIEnv *env)
 {
     nativeClassInit(env);
-    // µ÷ÓÃ×¢²á·½·¨
+
     registerNativeMethods(env, JNISTUDENT_CLASS,
     		method_table_student, NELEM(method_table_student));
+
+    registerNativeMethods(env, JNIEXCEPTION_CLASS,
+    		method_table_exception, NELEM(method_table_exception));
+
     return registerNativeMethods(env, JNIMAIN_CLASS,
             method_table_main, NELEM(method_table_main));
 }
+
+
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
@@ -222,6 +396,49 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 
     register_ndk_load(env);
 
-    // ·µ»ØjniµÄ°æ±¾
+
     return JNI_VERSION_1_4;
 }
+
+
+
+ /*
+#include <jni.h>
+
+JNIEXPORT void JNICALL Java_ExceptionAccess_doThrowException(JNIEnv *env, jclass cls , jint age ){
+	jclass stucls ;                                                        //Studentç±»çš„ç±»
+	jmethodID cmid ,setmid ,getmid ;                                   //Studentç±»çš„æ„é€ å™¨æ–¹æ³•ã€set/getæ–¹æ³•
+	jobject stuobj ;                                                        //Studentç±»çš„ä¸€ä¸ªå¯¹è±¡
+	jthrowable exc;                                                  //JNIä¸­çš„å¼‚å¸¸â€•â€•æœ¬ç¯‡çš„é‡ç‚¹å“¦ï¼
+
+	jint result ;                                                               //ç®€å•çš„è¿”å›ç»“æœ
+
+	stucls = (*env)->FindClass(env, "Student");               //å¾—åˆ°Studentç±»çš„ç±»
+	if (stucls == NULL) {             return ;        }
+	cmid = (*env)->GetMethodID(env, stucls,"<init>", "()V");       //æ„é€ Studentç±»
+								//åœ¨JNIä¸­ï¼Œæ„é€ å™¨å…¶å®å°±æ˜¯ä¸€ä¸ªåç§°ä¸º"<init>"çš„æ–¹æ³•ï¼Œè¿”å›å€¼ä¸ºvoid
+	if (cmid == NULL) {             return ;        }
+	stuobj = (*env)->NewObject(env, stucls, cmid, NULL);              //åˆ›å»ºè¯¥Studentç±»çš„å®ä¾‹
+
+	setmid=(*env)->GetMethodID(env, stucls, "setAge", "(I)V");       //å¾—åˆ°Studentç±»çš„setæ–¹æ³•
+	if (setmid == NULL) {       return; }
+	(*env)->CallVoidMethod(env, stuobj, setmid,age);
+		   //è°ƒç”¨Studentç±»çš„setæ–¹æ³•ï¼Œè¾“å…¥ä¸ºæœ¬åœ°æ–¹æ³•ä¸­çš„å‚æ•°ageå“¦ï¼ä»”ç»†çœ‹æ¸…æ¥šäº†ï¼
+	exc = (*env)->ExceptionOccurred(env);                            //ä»envä¸­å¾—åˆ°æ˜¯å¦å‘ç”Ÿå¼‚å¸¸
+	if (exc) {                                                                     //å¼‚å¸¸å‘ç”Ÿï¼Œåˆ™â€¦â€¦
+		   jclass newExcCls;                                                 //åœ¨JNIä¸­åˆ›å»ºä¸€ä¸ªå¼‚å¸¸å¯¹è±¡
+		   (*env)->ExceptionDescribe(env);                                   //å¾—åˆ°å¼‚å¸¸çš„æè¿°
+		   (*env)->ExceptionClear(env);                               //æ¸…é™¤å¼‚å¸¸
+		   newExcCls = (*env)->FindClass(env,"AgeOutofBoundsException");  //å»ºç«‹ä¸€ä¸ªå¯¹äºçš„å¼‚å¸¸
+		   if (newExcCls == NULL) {return;}
+		   (*env)->ThrowNew(env, newExcCls, "Thrown from C code!\n Age is out of Bound !\n");
+																   //åœ¨JNIä¸­æŠ›å‡ºå¼‚å¸¸ï¼å¼‚å¸¸åˆ°æ­¤ç»“æŸï¼
+	}
+
+	getmid=(*env)->GetMethodID(env, stucls, "getAge", "()I");              //å¾—getAgeæ–¹æ³•
+	if (getmid == NULL) {       return; }
+	result = (*env)->CallIntMethod(env, stuobj, getmid);                 //è°ƒç”¨getAgeæ–¹æ³•
+	printf("We are going to set the age ! age =  %d\n",result);              //åœ¨æœ¬åœ°æ–¹æ³•ä¸­è¾“å‡ºç»“æœ
+
+}
+*/
