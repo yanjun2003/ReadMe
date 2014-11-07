@@ -30,8 +30,14 @@
                 <action android:name="com.example.student.exception"/>  
                 <category android:name="android.intent.category.DEFAULT"/>  
             </intent-filter>  
-           </activity>
+         </activity>
         
+         <activity android:name="com.example.student.thread.ThreadNDK">
+             <intent-filter>  
+                <action android:name="com.example.student.thread"/>  
+                <category android:name="android.intent.category.DEFAULT"/>  
+            </intent-filter>  
+           </activity>
     </application>
     
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>

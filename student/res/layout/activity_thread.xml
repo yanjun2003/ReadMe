@@ -19,7 +19,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/mTextView"
+                android:id="@+id/mInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -34,41 +34,24 @@
         android:orientation="horizontal" >
    
    <Button 
-       android:id="@+id/mBtn01"
-        android:layout_weight="1"
-       android:layout_width="wrap_content"
+       android:id="@+id/mStart"
+       android:layout_weight="1"
+       android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:textColor="@color/cp_black"
-       android:text="@string/test1" 
+       android:text="@string/start" 
        />
    
     <Button 
-       android:id="@+id/mBtn02"
-        android:layout_weight="1"
-       android:layout_width="wrap_content"
+       android:id="@+id/mStop"
+       android:layout_weight="1"
+       android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:textColor="@color/cp_black"
-       android:text="@string/test2" 
+       android:text="@string/stop" 
        />
     
-    
-    <Button 
-       android:id="@+id/mBtn03"
-        android:layout_weight="1"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:textColor="@color/cp_black"
-       android:text="@string/test3" 
-       />
-    
-     <Button 
-       android:id="@+id/mBtn04"
-        android:layout_weight="1"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:textColor="@color/cp_black"
-       android:text="@string/wifiresult" 
-       />
      </LinearLayout>
      
 </LinearLayout>
+

@@ -4,12 +4,16 @@ import java.util.List;
 
 import com.example.student.R;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class ExceptionNDK extends Activity {
@@ -18,6 +22,7 @@ public class ExceptionNDK extends Activity {
      Button mBtn02;
      Button mBtn03;
      Button mBtn04;
+     ScrollView detail_scroll;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,6 +39,8 @@ public class ExceptionNDK extends Activity {
 	    mBtn02.setOnClickListener(mListener);
 	    mBtn03.setOnClickListener(mListener);
 	    mBtn04.setOnClickListener(mListener);
+	    
+	    detail_scroll=(ScrollView)findViewById(R.id.detail_scroll);
 	}
     
 	 private OnClickListener mListener= new OnClickListener(){
@@ -43,51 +50,50 @@ public class ExceptionNDK extends Activity {
 			switch(view.getId()){
 			case R.id.mBtn01:
 				mString=showException(13); 
-				mTextView.append(mString);
+				SendMessage(mString);
 				break;
 			case R.id.mBtn02:
 				mString=showException(130); 
-				mTextView.append(mString);
+				SendMessage(mString);
 				break;
 				
 			case R.id.mBtn03:
 				try{
 				    doit();
 				}catch (Exception e){
-					mTextView.append("doit throw exception\n");
+					SendMessage("doit throw exception!");
 				}
 				break;
 				
 				
 			case R.id.mBtn04:
-				mTextView.append("-------test()"+"\n");
-				mTextView.append(test()+"\n");
-
-				mTextView.append("-------testArray()"+"\n");
+				SendMessage("-------test()");
+				SendMessage(test());
+				SendMessage( "-------testArray()");
 				String[] s1 = testArray();
 				for (int i = 0; i < s1.length; i++) {
-					mTextView.append(s1[i]+"\n");
+					SendMessage("testArray result index :" +i+"=" +s1[i]);
 				}
 
-				mTextView.append("testObject()"+"\n");
-				mTextView.append(testObject().ssid+"\n");
-				mTextView.append(testObject().mac+"\n");
-				mTextView.append(String.valueOf(testObject().level)+"\n");
+				SendMessage("testObject()");
+				SendMessage(testObject().ssid);
+				SendMessage(testObject().mac);
+				SendMessage(String.valueOf(testObject().level));
 
-				mTextView.append("-----getScanResultsA()"+"\n");
+				SendMessage("-----getScanResultsA()");
 				ScanResult[] s2 = getScanResultsA();
 				for (int i = 0; i < s2.length; i++) {
-					mTextView.append("index"+ i +": \n");
-					mTextView.append(s2[i].ssid+"\n");
-					mTextView.append(s2[i].mac+"\n");
-					mTextView.append(String.valueOf(s2[i].level)+"\n");
+					SendMessage("index"+ i );
+					SendMessage(s2[i].ssid);
+					SendMessage(s2[i].mac);
+					SendMessage(String.valueOf(s2[i].level));
 				}
 
-				mTextView.append("-------getScanResults()"+"\n");
+				SendMessage("-------getScanResults()");
 				List<ScanResult> list = getScanResults();
-				mTextView.append(list.get(0).ssid+"\n");
-				mTextView.append(list.get(0).mac+"\n");
-				mTextView.append(String.valueOf(list.get(0).level)+"\n");
+				SendMessage(list.get(0).ssid);
+				SendMessage(list.get(0).mac);
+				SendMessage(String.valueOf(list.get(0).level));
 		
 				break;	
 				
@@ -96,7 +102,25 @@ public class ExceptionNDK extends Activity {
 		}
 		 
 	 };
+	 
+	private void SendMessage(String str){
+		mHandler.obtainMessage(SHOWCALLBACKINFO, str).sendToTarget();
+	} 
 	
+	private final static int SHOWCALLBACKINFO =2;
+	 @SuppressLint("HandlerLeak")
+		Handler mHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				if (msg.what == SHOWCALLBACKINFO) {
+					 final String str = (String) msg.obj;
+					 mTextView.append(str + "\n");
+					 detail_scroll.fullScroll(View.FOCUS_DOWN);
+					 }
+				}
+			};
+	 
+	 
 	public native String showException(int index);
 	private native void doit() throws IllegalArgumentException;
 	

@@ -22,9 +22,9 @@ LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -llog
 
  
 
-LOCAL_MODULE    := Student-jni
-#LOCAL_SRC_FILES := $(SRC_PATH)/Student-jni
-LOCAL_SRC_FILES := Student-jni.c
+LOCAL_MODULE    := NDKdemo-jni
+#LOCAL_SRC_FILES := $(SRC_PATH)/NDKdemo-jni
+LOCAL_SRC_FILES := NDKdemo-jni.c
        
 
 include $(BUILD_SHARED_LIBRARY)

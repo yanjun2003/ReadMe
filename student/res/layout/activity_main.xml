@@ -20,12 +20,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-    <Button
-        android:id="@+id/mButton"
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+   
+     <Button
+          android:layout_weight="1"
+        android:id="@+id/excptionBtn"
         android:layout_marginBottom="0dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/exception" />
+   
+   <Button
+        android:layout_weight="1"
+        android:id="@+id/threadBtn"
+        android:layout_marginBottom="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Thread" />
+       />
+    
+     </LinearLayout>
+        
+        
+        
+    
      </RelativeLayout>
     
 </RelativeLayout>

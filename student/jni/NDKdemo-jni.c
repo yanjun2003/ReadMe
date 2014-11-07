@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <jni.h>
 #include <assert.h>
+#include <pthread.h>
 #include <android/log.h>
 
 # define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))
@@ -10,7 +11,7 @@
 #define JNIMAIN_CLASS "com/example/student/MainActivity"
 #define JNISTUDENT_CLASS "com/example/student/Student"
 #define JNIEXCEPTION_CLASS "com/example/student/exception/ExceptionNDK"
-
+#define JNITHREAD_CLASS "com/example/student/thread/ThreadNDK"
 
 #define  TAG    "Student-jni"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
@@ -352,6 +353,218 @@ static JNINativeMethod method_table_exception[] = {
    {"getScanResults", "()Ljava/util/List;", (void*)Native_getScanResults},
 };
 
+static JavaVM *gJavaVM;
+static jclass gClass;
+static jobject gObject;
+static int threadFlag = 1;
+
+
+typedef enum {
+  RETURN_VOID = 0,
+  RETURN_VOID_INPUT_PARA,
+  RETURN_INT,
+  RETURN_INT_INPUT_PARA,
+  RETURN_FLOAT,
+  RETURN_FLOAT_INPUT_PARA
+} func_para;
+
+typedef enum {
+	INT = 0,
+	FLOAT,
+	STRING,
+} input_type;
+
+typedef struct {
+	int i;
+	float f;
+	char* s;
+	input_type type;
+} nvalue;
+
+typedef struct {
+    const char* funcName;
+    const char* funcSignature;
+    func_para funcPara;
+    jmethodID funcMethod;
+} func_info;
+
+func_info functions[] = {
+  // cb[0]
+  {
+    "callback1", "()V", RETURN_VOID,
+  },
+  // cb[1]
+  {
+    "callback2", "(IFLjava/lang/String;)I", RETURN_INT_INPUT_PARA,
+  },
+  // cb[2]
+  {
+	"callback3", "(Ljava/lang/String;)V", RETURN_VOID_INPUT_PARA,
+  },
+  // cb[3]
+  {
+  	"callback4", "(F)F", RETURN_FLOAT_INPUT_PARA,
+  },
+};
+
+int callMethodWrapper(JNIEnv* env, int mid, nvalue npar[], int paraSize) {
+	LOGI("callStaticMethodWrapper called for cb[%d] method %s,signature %s,"
+			"switch case %d", mid, functions[mid].funcName, functions[mid].funcSignature,
+			functions[mid].funcPara);
+
+
+	jvalue jpara[paraSize];
+	if (paraSize > 0) {
+		//Handle mapping nvalue -> jvalue
+		int i;
+		for (i=0; i<paraSize; i++) {
+			switch (npar[i].type) {
+			case INT:
+				jpara[i].i = npar[i].i;
+			break;
+			case FLOAT:
+				jpara[i].f = npar[i].f;
+			break;
+			case STRING:
+				jpara[i].l = (*env)->NewStringUTF(env, npar[i].s);
+			break;
+			}
+		}
+	}
+	switch (functions[mid].funcPara) {
+	  case RETURN_VOID:
+		  (*env)->CallVoidMethod(env, gObject, functions[mid].funcMethod);
+	  break;
+	  case RETURN_INT:
+		  (*env)->CallIntMethod(env, gObject, functions[mid].funcMethod);
+	  break;
+	  case RETURN_FLOAT:
+		  (*env)->CallFloatMethod(env, gObject, functions[mid].funcMethod);
+	  break;
+	  case RETURN_VOID_INPUT_PARA:
+		  (*env)->CallVoidMethodA(env, gObject, functions[mid].funcMethod, jpara);
+	  break;
+	  case RETURN_INT_INPUT_PARA:
+		  (*env)->CallIntMethodA(env, gObject, functions[mid].funcMethod, jpara);
+	  break;
+	  case RETURN_FLOAT_INPUT_PARA:
+		  (*env)->CallFloatMethodA(env, gObject, functions[mid].funcMethod, jpara);
+	  break;
+	}
+	return 0;
+}
+void* randomThread(void* arg) {
+	threadFlag = 1;
+	JNIEnv *env;
+	int isAttached = 0;
+	int status = (*gJavaVM)->GetEnv(gJavaVM, (void **) &env, JNI_VERSION_1_4);
+	if(status < 0) {
+		LOGE("callback_handler: failed to get JNI environment, assuming native thread");
+		status = (*gJavaVM)->AttachCurrentThread(gJavaVM, &env, NULL);
+		if(status < 0) {
+			LOGE("callback_handler: failed to attach current thread");
+		}
+		isAttached = 1;
+	}
+	int i=0;
+	nvalue v1, v2, v3, npar[3];
+	while (threadFlag == 1) {
+		switch(i){
+			case 0:
+				i=1;
+				callMethodWrapper(env, 0, NULL, 0);
+			break;
+			case 1:
+				i=2;
+				v1.type = INT;
+				v1.i = 12;
+				v2.type = FLOAT;
+				v2.f = 2.3;
+				v3.type = STRING;
+				v3.s = "string";
+				npar[0] = v1;
+				npar[1] = v2;
+				npar[2] = v3;
+				callMethodWrapper(env, 1, npar, 3);
+			break;
+			case 2:
+				i=3;
+				v1.type = STRING;
+				v1.s = "test string :)";
+				npar[0] = v1;
+				callMethodWrapper(env, 2, npar, 1);
+			break;
+			case 3:
+				i=0;
+				v1.type = FLOAT;
+				v1.f = 2.3;
+				npar[0] = v1;
+				callMethodWrapper(env, 3, npar, 1);
+			break;
+		}
+		sleep(2);
+	}
+
+	if(isAttached)
+		(*gJavaVM)->DetachCurrentThread(gJavaVM);
+
+    return ((void*)0);
+}
+
+
+void threadStart() {
+	LOGI("In %s threadStart called!", __func__);
+	pthread_t thread;
+	char *message = "Thread 1 started!";
+
+	//iret =
+	pthread_create( &thread, NULL, randomThread, NULL);
+}
+
+void threadStop() {
+	LOGI("In %s daemonStop called!", __func__);
+	threadFlag = 0;
+}
+
+
+JNIEXPORT void JNICALL Native_startThread(JNIEnv *env, jobject thiz){
+	threadStart();
+}
+
+JNIEXPORT void JNICALL Native_stopThread(JNIEnv *env, jobject thiz){
+	threadStop();
+}
+
+JNIEXPORT void JNICALL  Native_initThread(JNIEnv *env, jobject thiz){
+
+	LOGI("In %s init native function called",__func__);
+	int status;
+	int isAttached = 0;
+	gObject = (jobject)(*env)->NewGlobalRef(env, thiz);
+	jclass clazz = (*env)->GetObjectClass(env, thiz);
+	gClass = (jclass)(*env)->NewGlobalRef(env, clazz);
+	if (!clazz) {
+		LOGE("In %s callback_handler: failed to get object Class",__func__);
+	}
+	int num = NELEM(functions);    //sizeof functions/ sizeof functions[0];
+	LOGI("getting methodIDs of %d configured callback methods", num);
+	while(num--) {
+		LOGI("Method %d is %s with signature %s", num, functions[num].funcName, functions[num].funcSignature);
+		functions[num].funcMethod = (*env)->GetMethodID(env, clazz, functions[num].funcName, functions[num].funcSignature);
+		if(!functions[num].funcMethod) {
+			LOGE("callback_handler: failed to get method ID");
+		}
+	}
+
+}
+
+
+static JNINativeMethod method_table_thread[] = {
+   {"startThread", "()V", (void*)Native_startThread},
+   {"stopThread", "()V", (void*)Native_stopThread},
+   {"initThread", "()V", (void*)Native_initThread},
+};
+
 
 
 static int registerNativeMethods(JNIEnv* env, const char* className,
@@ -379,6 +592,9 @@ int register_ndk_load(JNIEnv *env)
     registerNativeMethods(env, JNIEXCEPTION_CLASS,
     		method_table_exception, NELEM(method_table_exception));
 
+    registerNativeMethods(env, JNITHREAD_CLASS,
+    		method_table_thread, NELEM(method_table_thread));
+
     return registerNativeMethods(env, JNIMAIN_CLASS,
             method_table_main, NELEM(method_table_main));
 }
@@ -388,57 +604,15 @@ int register_ndk_load(JNIEnv *env)
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
     JNIEnv* env = NULL;
-    jint result = -1;
+    gJavaVM = vm;
 
     if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
-        return result;
+    	  LOGE("In %s Failed to get the environment using GetEnv()",__func__);
+    	        return -1;
     }
 
     register_ndk_load(env);
 
-
     return JNI_VERSION_1_4;
 }
 
-
-
- /*
-#include <jni.h>
-
-JNIEXPORT void JNICALL Java_ExceptionAccess_doThrowException(JNIEnv *env, jclass cls , jint age ){
-	jclass stucls ;                                                        //Student类的类
-	jmethodID cmid ,setmid ,getmid ;                                   //Student类的构造器方法、set/get方法
-	jobject stuobj ;                                                        //Student类的一个对象
-	jthrowable exc;                                                  //JNI中的异常――本篇的重点哦！
-
-	jint result ;                                                               //简单的返回结果
-
-	stucls = (*env)->FindClass(env, "Student");               //得到Student类的类
-	if (stucls == NULL) {             return ;        }
-	cmid = (*env)->GetMethodID(env, stucls,"<init>", "()V");       //构造Student类
-								//在JNI中，构造器其实就是一个名称为"<init>"的方法，返回值为void
-	if (cmid == NULL) {             return ;        }
-	stuobj = (*env)->NewObject(env, stucls, cmid, NULL);              //创建该Student类的实例
-
-	setmid=(*env)->GetMethodID(env, stucls, "setAge", "(I)V");       //得到Student类的set方法
-	if (setmid == NULL) {       return; }
-	(*env)->CallVoidMethod(env, stuobj, setmid,age);
-		   //调用Student类的set方法，输入为本地方法中的参数age哦！仔细看清楚了！
-	exc = (*env)->ExceptionOccurred(env);                            //从env中得到是否发生异常
-	if (exc) {                                                                     //异常发生，则……
-		   jclass newExcCls;                                                 //在JNI中创建一个异常对象
-		   (*env)->ExceptionDescribe(env);                                   //得到异常的描述
-		   (*env)->ExceptionClear(env);                               //清除异常
-		   newExcCls = (*env)->FindClass(env,"AgeOutofBoundsException");  //建立一个对于的异常
-		   if (newExcCls == NULL) {return;}
-		   (*env)->ThrowNew(env, newExcCls, "Thrown from C code!\n Age is out of Bound !\n");
-																   //在JNI中抛出异常！异常到此结束！
-	}
-
-	getmid=(*env)->GetMethodID(env, stucls, "getAge", "()I");              //得getAge方法
-	if (getmid == NULL) {       return; }
-	result = (*env)->CallIntMethod(env, stuobj, getmid);                 //调用getAge方法
-	printf("We are going to set the age ! age =  %d\n",result);              //在本地方法中输出结果
-
-}
-*/

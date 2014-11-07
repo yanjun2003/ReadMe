@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 	private float fval;
 	private String str;
 	
-	private Button mButton;
+	private Button exceptionBtn,threadBtn;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -26,18 +26,10 @@ public class MainActivity extends Activity {
 			mTextView =(TextView)findViewById(R.id.mTextView);
 			mTextView.setText(stringFromJNIDynamic() + "\r\n");
 			    
-			mButton=(Button)findViewById(R.id.mButton);
-			mButton.setOnClickListener(new OnClickListener(){
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent();
-		  		    intent.setAction("com.example.student.exception");
-	  			    startActivity(intent);
-				}
-				
-			});
+			exceptionBtn=(Button)findViewById(R.id.excptionBtn);
+			exceptionBtn.setOnClickListener(MyListener);
+			threadBtn=(Button)findViewById(R.id.threadBtn);
+			threadBtn.setOnClickListener(MyListener);
 			
 		    Log.d(TAG, "onCreate");
 	        ival = intFromJni();
@@ -59,9 +51,27 @@ public class MainActivity extends Activity {
 	        }
 	}
 
+	private OnClickListener MyListener= new OnClickListener(){
+        Intent intent = new Intent();
+		@Override
+		public void onClick(View view) {
+			// TODO Auto-generated method stub
+			switch(view.getId()){
+			case R.id.threadBtn:
+				intent.setAction("com.example.student.thread");
+				startActivity(intent);
+				break;
+			case R.id.excptionBtn:
+				intent.setAction("com.example.student.exception");
+				startActivity(intent);
+				break;
+			}
+		}
+		
+	};
 	
 	static {
-		System.loadLibrary("Student-jni");
+		System.loadLibrary("NDKdemo-jni");
 	}
 	
 	public native String stringFromJNIStatic();
