@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 	private float fval;
 	private String str;
 	
-	private Button exceptionBtn,threadBtn;
+	private Button exceptionBtn,threadBtn,OpenGLBtn;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -30,6 +30,9 @@ public class MainActivity extends Activity {
 			exceptionBtn.setOnClickListener(MyListener);
 			threadBtn=(Button)findViewById(R.id.threadBtn);
 			threadBtn.setOnClickListener(MyListener);
+			OpenGLBtn=(Button)findViewById(R.id.GLBtn);
+			OpenGLBtn.setOnClickListener(MyListener);
+			
 			
 		    Log.d(TAG, "onCreate");
 	        ival = intFromJni();
@@ -61,8 +64,14 @@ public class MainActivity extends Activity {
 				intent.setAction("com.example.student.thread");
 				startActivity(intent);
 				break;
+				
 			case R.id.excptionBtn:
 				intent.setAction("com.example.student.exception");
+				startActivity(intent);
+				break;
+				
+			case R.id.GLBtn:
+				intent.setAction("com.example.student.gl_test");
 				startActivity(intent);
 				break;
 			}

@@ -19,6 +19,7 @@ public class ThreadNDK extends Activity {
     private ScrollView detail_scroll;
     private final static int SHOWCALLBACKINFO=2;
     
+    private static boolean isThreadRun =false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -28,7 +29,9 @@ public class ThreadNDK extends Activity {
 		startBtn =(Button)findViewById(R.id.mStart);
 		stopBtn =(Button)findViewById(R.id.mStop);
 		detail_scroll = (ScrollView)findViewById(R.id.detail_scroll);
-
+		isThreadRun = false;
+		stopBtn.setEnabled(false);
+		
 	    initThread();
 		 
 	 
@@ -43,8 +46,14 @@ public class ThreadNDK extends Activity {
 		   switch(view.getId()){
 			   case R.id.mStart:
 				   startThread();
+				   isThreadRun = true;
+				   startBtn.setEnabled(false);
+				   stopBtn.setEnabled(true);
 				   break;
 			   case R.id.mStop:
+				   isThreadRun = false;
+				   startBtn.setEnabled(true);
+				   stopBtn.setEnabled(false);
 				   stopThread();
 				   break;   
 		   }

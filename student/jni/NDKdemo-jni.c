@@ -1,10 +1,16 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+
 #include <jni.h>
 #include <assert.h>
 #include <pthread.h>
 #include <android/log.h>
+
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
+
 
 # define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))
 
@@ -12,6 +18,8 @@
 #define JNISTUDENT_CLASS "com/example/student/Student"
 #define JNIEXCEPTION_CLASS "com/example/student/exception/ExceptionNDK"
 #define JNITHREAD_CLASS "com/example/student/thread/ThreadNDK"
+#define JNIGL_CLASS "com/example/student/gl_test/OpenGL"
+
 
 #define  TAG    "Student-jni"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
@@ -528,7 +536,7 @@ void threadStop() {
 
 
 JNIEXPORT void JNICALL Native_startThread(JNIEnv *env, jobject thiz){
-	threadStart();
+		threadStart();
 }
 
 JNIEXPORT void JNICALL Native_stopThread(JNIEnv *env, jobject thiz){
@@ -566,6 +574,160 @@ static JNINativeMethod method_table_thread[] = {
 };
 
 
+static void printGLString(const char *name, GLenum s) {
+    const char *v = (const char *) glGetString(s);
+    LOGI("In %s ,GL %s = %s\n",__func__, name, v);
+}
+
+static void checkGlError(const char* op) {
+
+
+}
+
+static const char gVertexShader[] =
+    "attribute vec4 vPosition;\n"
+    "void main() {\n"
+    "  gl_Position = vPosition;\n"
+    "}\n";
+
+static const char gFragmentShader[] =
+    "precision mediump float;\n"
+    "void main() {\n"
+    "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
+    "}\n";
+
+GLuint loadShader(GLenum shaderType, const char* pSource) {
+    GLuint shader = glCreateShader(shaderType);
+    LOGI("In %s , The pSource is %s \n", __func__, pSource);
+    if (shader) {
+        glShaderSource(shader, 1, &pSource, NULL);
+        glCompileShader(shader);
+        GLint compiled = 0;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+        if (!compiled) {
+            GLint infoLen = 0;
+            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
+            if (infoLen) {
+                char* buf = (char*) malloc(infoLen);
+                if (buf) {
+                    glGetShaderInfoLog(shader, infoLen, NULL, buf);
+                    LOGE("Could not compile shader %d:\n%s\n",
+                            shaderType, buf);
+                    free(buf);
+                }
+                glDeleteShader(shader);
+                shader = 0;
+            }
+        }
+    }
+    return shader;
+}
+
+GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
+    LOGI("In %s, the pVertexSource is %s", __func__, pVertexSource);
+    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
+    if (!vertexShader) {
+        return 0;
+    }
+    LOGI("In %s, the pFragmentSource is %s", __func__, pFragmentSource);
+    GLuint pixelShader = loadShader(GL_FRAGMENT_SHADER, pFragmentSource);
+    if (!pixelShader) {
+        return 0;
+    }
+
+    GLuint program = glCreateProgram();
+    if (program) {
+        glAttachShader(program, vertexShader);
+        checkGlError("glAttachShader");
+        glAttachShader(program, pixelShader);
+        checkGlError("glAttachShader");
+        glLinkProgram(program);
+        GLint linkStatus = GL_FALSE;
+        glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
+        if (linkStatus != GL_TRUE) {
+            GLint bufLength = 0;
+            glGetProgramiv(program, GL_INFO_LOG_LENGTH, &bufLength);
+            if (bufLength) {
+                char* buf = (char*) malloc(bufLength);
+                if (buf) {
+                    glGetProgramInfoLog(program, bufLength, NULL, buf);
+                    LOGE("Could not link program:\n%s\n", buf);
+                    free(buf);
+                }
+            }
+            glDeleteProgram(program);
+            program = 0;
+        }
+    }
+    return program;
+}
+
+GLuint gProgram;
+GLuint gvPositionHandle;
+
+int  setupGraphics(int w, int h) {
+    printGLString("Version", GL_VERSION);
+    printGLString("Vendor", GL_VENDOR);
+    printGLString("Renderer", GL_RENDERER);
+    printGLString("Extensions", GL_EXTENSIONS);
+
+    LOGI("setupGraphics(%d, %d)", w, h);
+    gProgram = createProgram(gVertexShader, gFragmentShader);
+    if (!gProgram) {
+        LOGE("Could not create program.");
+        return 0;
+    }
+    gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
+    checkGlError("glGetAttribLocation");
+    LOGI("glGetAttribLocation(\"vPosition\") = %d\n",
+            gvPositionHandle);
+
+    glViewport(0, 0, w, h);
+    checkGlError("glViewport");
+    return 1;
+}
+
+const GLfloat gTriangleVertices[] = { 0.0f, 0.6f, -0.6f, -0.6f,
+        0.6f, -0.6f };
+
+void renderFrame() {
+    static float grey;
+/*    grey += 0.01f;
+    if (grey > 1.0f) {
+        grey = 0.0f;
+    }*/
+    grey =0.0f;
+   // LOGI("In %s", __func__);
+    glClearColor(grey, grey, grey, 1.0f);
+    checkGlError("glClearColor");
+    glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    checkGlError("glClear");
+
+    glUseProgram(gProgram);
+    checkGlError("glUseProgram");
+
+    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
+    checkGlError("glVertexAttribPointer");
+    glEnableVertexAttribArray(gvPositionHandle);
+    checkGlError("glEnableVertexAttribArray");
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    checkGlError("glDrawArrays");
+}
+
+JNIEXPORT void JNICALL Native_Renderer_init(JNIEnv *env, jobject thiz,jint width,jint height){
+	    LOGI("In %s, and the parameter of width is %d, the height is %d!\n",__func__,width,height);
+	    setupGraphics(width, height);
+}
+
+
+JNIEXPORT void JNICALL Native_Renderer_step(JNIEnv *env, jobject thiz){
+	  renderFrame();
+}
+
+static JNINativeMethod method_table_GL[] = {
+   {"Renderer_init", "(II)V", (void*)Native_Renderer_init},
+   {"Renderer_step", "()V", (void*)Native_Renderer_step},
+};
 
 static int registerNativeMethods(JNIEnv* env, const char* className,
         JNINativeMethod* gMethods, int numMethods)
@@ -582,6 +744,8 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
     return JNI_TRUE;
 }
 
+
+
 int register_ndk_load(JNIEnv *env)
 {
     nativeClassInit(env);
@@ -594,6 +758,9 @@ int register_ndk_load(JNIEnv *env)
 
     registerNativeMethods(env, JNITHREAD_CLASS,
     		method_table_thread, NELEM(method_table_thread));
+
+    registerNativeMethods(env, JNIGL_CLASS,
+    		method_table_GL, NELEM(method_table_GL));
 
     return registerNativeMethods(env, JNIMAIN_CLASS,
             method_table_main, NELEM(method_table_main));

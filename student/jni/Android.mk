@@ -12,18 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-#local path ， jni dir 
- 
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -llog
 
- 
-
+LOCAL_LDLIBS    := -llog -lGLESv2
 LOCAL_MODULE    := NDKdemo-jni
-#LOCAL_SRC_FILES := $(SRC_PATH)/NDKdemo-jni
 LOCAL_SRC_FILES := NDKdemo-jni.c
        
 
