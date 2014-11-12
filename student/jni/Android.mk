@@ -16,7 +16,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_LDLIBS    := -llog -lGLESv2
+LOCAL_LDLIBS    := -llog -lGLESv2 -lOpenSLES -landroid
 LOCAL_MODULE    := NDKdemo-jni
 LOCAL_SRC_FILES := NDKdemo-jni.c
        

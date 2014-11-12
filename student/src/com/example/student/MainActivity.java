@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 	private float fval;
 	private String str;
 	
-	private Button exceptionBtn,threadBtn,OpenGLBtn;
+	private Button exceptionBtn,threadBtn,OpenGLBtn,OpenSLBtn;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -33,6 +33,8 @@ public class MainActivity extends Activity {
 			OpenGLBtn=(Button)findViewById(R.id.GLBtn);
 			OpenGLBtn.setOnClickListener(MyListener);
 			
+			OpenSLBtn=(Button)findViewById(R.id.SLBtn);
+			OpenSLBtn.setOnClickListener(MyListener);
 			
 		    Log.d(TAG, "onCreate");
 	        ival = intFromJni();
@@ -72,6 +74,11 @@ public class MainActivity extends Activity {
 				
 			case R.id.GLBtn:
 				intent.setAction("com.example.student.gl_test");
+				startActivity(intent);
+				break;
+				
+			case R.id.SLBtn:
+				intent.setAction("com.example.student.SL_test_audio");
 				startActivity(intent);
 				break;
 			}
