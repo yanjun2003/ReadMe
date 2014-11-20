@@ -26,6 +26,7 @@
 
 #define JNIMAIN_CLASS "com/example/student/MainActivity"
 #define JNISTUDENT_CLASS "com/example/student/Student"
+#define JNIACCESS_CLASS "com/example/student/FieldAccessActivity"
 #define JNIEXCEPTION_CLASS "com/example/student/exception/ExceptionNDK"
 #define JNITHREAD_CLASS "com/example/student/thread/ThreadNDK"
 #define JNIGL_CLASS "com/example/student/gl_test/OpenGL"
@@ -134,14 +135,54 @@ JNIEXPORT jstring JNICALL native_hello(JNIEnv *env, jclass thiz)
 	 LOGI("%s info\n", __func__);
     return (*env)->NewStringUTF(env, "hello All");
 }
+/*
+ * 二维数组操作
+ */
+JNIEXPORT jobjectArray JNICALL Native_initInt2DArray(JNIEnv *env, jobject thiz, jint size){
+	 jobjectArray result;
+	 int i;
+	 LOGI("In func %s \n", __func__);
+	 jclass intArrayClazz =(*env)->FindClass(env,"[I");
+	 if(intArrayClazz==NULL){
+		 LOGI("intArrayClazz is not exist!");
+		 return NULL;
+	 }
 
+	 result = (*env)->NewObjectArray(env,size,intArrayClazz,NULL);
+	 if(result==NULL){
+			 LOGI("Get the ObjectArray Fail!");
+			 return NULL;
+	 }
 
+	  for (i = 0; i < size; i++) {
+	         jint tmp[size];  /* make sure it is large enough! */
+	         int j;
+
+	         jintArray iarr = (*env)->NewIntArray(env, size);
+	         if (iarr == NULL) {
+	        	 LOGI("Get the NewIntArray Fail!");
+	             return NULL; /* out of memory error thrown */
+
+	         }
+
+	         for (j = 0; j < size; j++) {
+	             tmp[j] = 2*i +2*j;
+	         }
+
+	         (*env)->SetIntArrayRegion(env, iarr, 0, size, tmp);
+	         (*env)->SetObjectArrayElement(env, result, i, iarr);
+	         (*env)->DeleteLocalRef(env, iarr);
+	     }
+
+	 return result;
+}
 
 
 static JNINativeMethod method_table_main[] = {
     { "stringFromJNIDynamic", "()Ljava/lang/String;", (void*)native_hello },
     { "intFromJni", "()I", (void*)Native_intFromJni},
     { "intToJni", "(I)V", (void*)Native_intToJni},
+    { "initInt2DArray", "(I)[[I", (void*)Native_initInt2DArray},
     { "floatFromJni", "()F", (void*)Native_floatFromJni},
     { "floatToJni", "(F)V", (void*)Native_floatToJni},
     { "stringFromJni", "()Ljava/lang/String;", (void*)Native_stringFromJni},
@@ -1491,9 +1532,64 @@ static JNINativeMethod method_table_SL[] = {
    {"SL_createEngine", "()V", (void*) NativeAudio_createEngine},
 };
 
+JNIEXPORT void JNICALL Native_access(JNIEnv *env, jobject thiz){
+	  jfieldID mStr_id;
+	  jmethodID SendMessage_id;
+	  jstring jstr;
+	  const char *str;
+	  jclass my_clazz;
+	  jobject object;//;=(*env)->NewStringUTF(env,"AP2");
 
 
+	 LOGI("In func %s ..................\n", __func__);
+	 my_clazz = (*env)->GetObjectClass(env, thiz);
 
+	 SendMessage_id=(*env)->GetMethodID(env,my_clazz,"SendMessage","(Ljava/lang/String;)V");
+
+	 if(NULL==SendMessage_id)
+	 {
+		 LOGI("In func %s ,NULL==SendMessage_id \n", __func__);
+		 return ;
+	 }
+
+
+	 object=(*env)->NewStringUTF(env,"In C code:");
+	 (*env)->CallVoidMethod(env,thiz,SendMessage_id,object);
+
+	 mStr_id =(*env)->GetFieldID(env,my_clazz,"mStr","Ljava/lang/String;");
+	 if (mStr_id == NULL) {
+		 	 object=(*env)->NewStringUTF(env,"Get the mStr field fail.. ");
+		 	 (*env)->CallVoidMethod(env,thiz,SendMessage_id,object);
+	        return; /* failed to find the field */
+	 }
+
+	jstr = (*env)->GetObjectField(env, thiz, mStr_id);
+    str = (*env)->GetStringUTFChars(env, jstr, NULL);
+    if(NULL==str){
+    	 object=(*env)->NewStringUTF(env,"Get the mStr value fail.. ");
+    	 (*env)->CallVoidMethod(env,thiz,SendMessage_id,object);
+    	return ;
+    }
+
+    object = (*env)->NewStringUTF(env,str );
+    (*env)->CallVoidMethod(env,thiz,SendMessage_id,object);
+
+    (*env)->ReleaseStringUTFChars(env, jstr, str);
+
+      jstr = (*env)->NewStringUTF(env, "123");
+      if (jstr == NULL) {
+    	  object=(*env)->NewStringUTF(env,"New String UTF fail..");
+    	  (*env)->CallVoidMethod(env,thiz,SendMessage_id,object);
+            return; /* out of memory */
+      }
+
+
+      (*env)->SetObjectField(env, thiz, mStr_id, jstr);
+}
+
+static JNINativeMethod method_table_access[] = {
+   {"access", "()V", (void*) Native_access},
+};
 
 static int registerNativeMethods(JNIEnv* env, const char* className,
         JNINativeMethod* gMethods, int numMethods)
@@ -1515,6 +1611,8 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
 int register_ndk_load(JNIEnv *env)
 {
     nativeClassInit(env);
+    registerNativeMethods(env, JNIACCESS_CLASS,
+         		method_table_access, NELEM(method_table_access));
 
     registerNativeMethods(env, JNISTUDENT_CLASS,
     		method_table_student, NELEM(method_table_student));
@@ -1530,6 +1628,7 @@ int register_ndk_load(JNIEnv *env)
 
     registerNativeMethods(env, JNISL_CLASS,
        		method_table_SL, NELEM(method_table_SL));
+
 
 
     return registerNativeMethods(env, JNIMAIN_CLASS,

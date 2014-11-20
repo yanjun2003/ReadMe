@@ -1,78 +1,83 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
-    <RelativeLayout 
-        android:layout_marginTop="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        >
+    android:orientation="vertical">
+   
+        
     <TextView
         android:id="@+id/mTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
-     </RelativeLayout>
     
-    
-    
-    <RelativeLayout 
-        android:layout_marginTop="400dp"
+
+     
+    <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-        <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical">
-        "
-			   <LinearLayout
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:orientation="horizontal" >
-					   
-					     <Button
-					          android:layout_weight="1"
-					        android:id="@+id/excptionBtn"
-					        android:layout_marginBottom="0dp"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text="@string/exception" />
-					   
-					   <Button
-					        android:layout_weight="1"
-					        android:id="@+id/threadBtn"
-					        android:layout_marginBottom="0dp"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text="@string/Thread"  />	   
-			     </LinearLayout>
-			        
-			        
-			     <LinearLayout
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:orientation="horizontal" >
-			     <Button
-			        android:layout_weight="1"
-			        android:id="@+id/GLBtn"
-			        android:layout_marginBottom="0dp"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/GLTest" />
-			       />
-			       
-			       <Button
-			        android:layout_weight="1"
-			        android:id="@+id/SLBtn"
-			        android:layout_marginBottom="0dp"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/SLTest" />
-			       />
-			     </LinearLayout>  
-            </LinearLayout>
-     </RelativeLayout>
+        android:orientation="vertical" >
     
-</RelativeLayout>
+     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+   
+	     <Button
+	        android:layout_weight="1"
+	        android:id="@+id/excptionBtn"
+	        android:layout_marginBottom="0dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/exception" />
+	   
+	   <Button
+	        android:layout_weight="1"
+	        android:id="@+id/threadBtn"
+	        android:layout_marginBottom="0dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/Thread" />
+	       />
+     </LinearLayout>
+        
+        
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+   
+    
+	     <Button
+	        android:layout_weight="1"
+	        android:id="@+id/GLBtn"
+	        android:layout_marginBottom="0dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/GLTest" />
+	       />
+	       
+	       <Button
+	        android:layout_weight="1"
+	        android:id="@+id/SLBtn"
+	        android:layout_marginBottom="0dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/SLTest" />
+	       />
+       
+          <Button
+	        android:layout_weight="1"
+	        android:id="@+id/accessBtn"
+	        android:layout_marginBottom="0dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/access" />
+	       />
+       
+       
+     </LinearLayout>
+    
+     </LinearLayout>
+    
+</LinearLayout>

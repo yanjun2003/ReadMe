@@ -52,7 +52,17 @@
                 <action android:name="com.example.student.SL_test_audio"/>  
                 <category android:name="android.intent.category.DEFAULT"/>  
             </intent-filter>  
+              </activity>
+             
+           <activity android:name="com.example.student.FieldAccessActivity">
+             <intent-filter>  
+                <action android:name="com.example.student.FieldAccessActivity"/>  
+                <category android:name="android.intent.category.DEFAULT"/>  
+            </intent-filter>  
            </activity>
+      
+           
+           
     </application>
     
     <uses-feature android:glEsVersion="0x00020000"/>

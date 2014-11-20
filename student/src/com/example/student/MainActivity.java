@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 	private float fval;
 	private String str;
 	
-	private Button exceptionBtn,threadBtn,OpenGLBtn,OpenSLBtn;
+	private Button exceptionBtn,threadBtn,OpenGLBtn,OpenSLBtn,AccessBtn;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -35,6 +35,9 @@ public class MainActivity extends Activity {
 			
 			OpenSLBtn=(Button)findViewById(R.id.SLBtn);
 			OpenSLBtn.setOnClickListener(MyListener);
+			
+			AccessBtn=(Button)findViewById(R.id.accessBtn);
+			AccessBtn.setOnClickListener(MyListener);
 			
 		    Log.d(TAG, "onCreate");
 	        ival = intFromJni();
@@ -54,6 +57,16 @@ public class MainActivity extends Activity {
 	            Log.d(TAG, "Student["+i+"] -- "+mStudent);
 	            mStudent.sayHello();
 	        }
+	        
+	        
+	        int[][] i2Darray=initInt2DArray(3);
+	        int sum =0;
+	        for (int i = 0; i < 3; i++) {
+	             for (int j = 0; j < 3; j++) {
+	            	 sum=sum+ i2Darray[i][j];
+	             }
+	         }
+	        mTextView.setText("The sum of i2Darray is "+sum);        
 	}
 
 	private OnClickListener MyListener= new OnClickListener(){
@@ -81,6 +94,10 @@ public class MainActivity extends Activity {
 				intent.setAction("com.example.student.SL_test_audio");
 				startActivity(intent);
 				break;
+			case R.id.accessBtn:
+				intent.setAction("com.example.student.FieldAccessActivity");
+				startActivity(intent);
+				break;
 			}
 		}
 		
@@ -99,6 +116,9 @@ public class MainActivity extends Activity {
 	private native String stringFromJni();
 	private native void stringToJni(String val);
 	private native int getStudentInfoByIndex(Student student, int index);	
+	
+	private static native int[][] initInt2DArray(int size);
+	
 	
 	@Override
 	public void onBackPressed() {

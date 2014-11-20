@@ -11,6 +11,7 @@
     <string name="test3">test3</string>
     <string name="wifiresult">wifiresult</string>
     <string name="GLTest">GLTest</string>
+    <string name="access">access</string>
     <string name="SLTest">SLTest</string>
     <string name="start">开始进程</string>
     <string name="stop">结束进程</string>
