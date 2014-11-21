@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="app_name">AsciiToBinString_test</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string-array name="conversion_choices_array">
+        <item>Ascii_To_Bin</item>
+        <item>Bin_To_Ascii</item>
+    </string-array>
+</resources>
