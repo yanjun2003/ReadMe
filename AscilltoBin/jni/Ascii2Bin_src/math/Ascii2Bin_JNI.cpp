@@ -82,13 +82,13 @@ JNIEXPORT jstring JNICALL Native_calculateAsciiFromBinStringJNI( JNIEnv* env,job
 	{
 		JNIEnv* env = NULL;
 
-		if (vm->GetEnv( (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+		if (vm->GetEnv( (void**) &env, JNI_VERSION_1_6) != JNI_OK) {
 			  LOGE("In %s Failed to get the environment using GetEnv()",__func__);
 					return -1;
 		}
 
 		register_ndk_load(env);
 
-		return JNI_VERSION_1_4;
+		return JNI_VERSION_1_6;
 	}
 
