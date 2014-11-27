@@ -85,9 +85,9 @@ public class WifiDirectBroadCastReceiver extends BroadcastReceiver {
             }
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
         	Log.i(TAG,"4..WIFI_P2P_THIS_DEVICE_CHANGED_ACTION");
-        	intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
             //开始搜索wifi peer to peer 热点
             StartScanWifiPoint();
+            manager.requestPeers(channel, activity.mP2pListener);
         }
     }
 

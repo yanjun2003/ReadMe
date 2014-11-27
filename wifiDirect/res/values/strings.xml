@@ -8,6 +8,17 @@
     <string name="connect">连接</string>
     <string name="disconnect">断开</string>
     
-       <string name="p2p_switch_off_prompt">wifi p2p 没有开启，请开启此功能</string>
-        <string name="p2p_switch_on_prompt">wifi p2p 已经开启</string>
+    <string name="prompt">发送消息</string>
+    <string name="send">发送</string>   
+    
+    <string name="p2p_switch_off_prompt">wifi p2p 没有开启，请开启此功能</string>
+    <string name="p2p_switch_on_prompt">wifi p2p 已经开启</string>
+    
+    
+    <string name="connecting_point">正在连接wifi 热点：</string>
+    <string name="connect_point_success">connect wifi peer success</string>
+    <string name="connect_point_fail">connect wifi peer fail</string>
+    
+    <string name="find_point_success">搜索到wifi peer 热点</string>
+    <string name="find_point_fail">没有搜索到wifi peer 热点</string>
 </resources>
