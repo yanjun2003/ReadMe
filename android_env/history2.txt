@@ -1,0 +1,729 @@
+    1  sudo pppoeconf
+    2  ping sina.com -t
+    3  ping sina.com 
+    4  ls
+    5  cd work/
+    6  ls
+    7  sudo mkdir /usr/lib/java
+    8  sudo mv jdk-6u41-linux-x64.bin /usr/lib/java/
+    9  cd /usr/lib/java/
+   10  sudo chmod 777 jdk-6u41-linux-x64.bin 
+   11  sudo ./jdk-6u41-linux-x64.bin 
+   12  sudo gedit /etc/profile
+   13  ls
+   14  sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-dri:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 dpkg-dev
+   15  sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
+   16  cd /etc/udev/rules.d/
+   17  ls
+   18  touch 70-android.rules
+   19  sudo touch 70-android.rules
+   20  sudo gedit 70-android.rules 
+   21  sudo chmod a+r /etc/udev/rules.d/70-android.rules
+   22  sudo /etc/init.d/udev restart
+   23  sudo apt-get autoclean
+   24  sudo apt-get install libswitch-perl  
+   25  cd share/
+   26  ls
+   27  cd a526Ev42_2/
+   28  ls
+   29  cd lichee/
+   30  ./build.sh
+   31  cd ..
+   32  ls
+   33  cd ..
+   34  ls
+   35  tar -zvxf android-ndk-r9d-linux-x86_64.tar.bz2
+   36  ls
+   37  rm -rf android-ndk-r9d/
+   38  sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-dri:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 dpkg-dev
+   39  sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
+   40  sudo gedit /etc/hosts
+   41  ls
+   42  cd share/
+   43  ls
+   44  tar -zvxf A23_a526Ev42_2.tar.tgz 
+   45  ls
+   46  cd a526Ev42_2/
+   47  ls
+   48  cd android/
+   49  source build/envsetup.sh 
+   50  lunch
+   51  make
+   52  sudo apt-get install uboot
+   53  sudo apt-get install uboot-mkimage
+   54  sudo apt-get install u-boot-tools
+   55  extrat-bsp
+   56  extract-bsp
+   57  make
+   58  ls
+   59  cd share/
+   60  ls
+   61  cd a526Ev42_2/
+   62  ls
+   63  cd android/
+   64  ls
+   65  cd out/
+   66  ls
+   67  cd target/
+   68  ls
+   69  cd product/
+   70  ls
+   71  exit
+   72  ls
+   73  cd share/
+   74  ls
+   75  cd a526Ev42_2/
+   76  cd android/
+   77  source build/envsetup.sh 
+   78  lunch
+   79  make
+   80  sudo gedit /etc/profile
+   81  adb shell
+   82  cd adt-bundle-linux/
+   83  ls
+   84  pwd
+   85  adb shell
+   86  adb kill-server
+   87  adb shell
+   88  adb kill-server
+   89  lsusb
+   90  sudo gedit /etc/udev/rules.d/70-android.rules
+   91  adb shell
+   92  adb kill-server
+   93  adb reboot
+   94  adb devices
+   95  adb shell
+   96  adb devices
+   97  adb shell
+   98  exit
+   99  adb devices
+  100  adb shell
+  101  adb shel
+  102  cd share/
+  103  ls
+  104  cd a526Ev42_2/
+  105  ls
+  106  cd android/
+  107  source build/envsetup.sh 
+  108  lunch
+  109  extract-bsp
+  110  make
+  111  pack
+  112  adb shell
+  113  ls
+  114  sudo chmod a+x android-ndk-r10c-linux-x86_64.bin 
+  115  ./android-ndk-r10c-linux-x86_64.bin 
+  116  ls
+  117  mkdir github_dir
+  118  cd github_dir/
+  119  ls
+  120  git clone https://github.com/demuyan/AndroidNDKbook.git
+  121  git clone https://github.com/wikibook/androidndk.git
+  122  adb uninstall com.miui.onekeylocker
+  123  adb reboot
+  124  lsusb
+  125  adb shell
+  126  cd /etc/udev/rules.d/
+  127  s
+  128  ls
+  129  sudo gedit 70-android.rules
+  130  adb kill-server
+  131  adb devices
+  132  adb shell
+  133  adb devices
+  134  adb shell
+  135  sudo apt-get install git-gui
+  136  ssh git@github.com
+  137  cd ..
+  138  ls
+  139  adb shell
+  140  ping sina.com 
+  141  adb shell
+  142  ls
+  143  cd share/
+  144  ls
+  145  cd a526Ev42_2/
+  146  ls
+  147  cd android/
+  148  source  build/envsetup.sh 
+  149  lucnh
+  150  lunch
+  151  extract-bsp
+  152  make
+  153  pack
+  154  sudo gedit  /etc/hosts
+  155  sudo apt-get update
+  156  sudo apt-get dist-upgrade
+  157  sudo apt-get autoclean
+  158  sudo apt-get install update-manager-core
+  159  sudo do-release-upgrade
+  160  sudo do-release-upgrade -d
+  161  ls
+  162  cd git_dir/
+  163  ls
+  164  cd ReadMe/
+  165  ls
+  166  git log .
+  167  git pull origin  master 
+  168  git status 
+  169  git diff student/res/layout/activity_
+  170  git diff student/res/layout/activity_main.xml
+  171  git add student/res/layout/activity_main.xml
+  172  git commit -m "modify the layout of mainactivity"
+  173  git config --global user.email yanjunbill@gmail.com
+  174  git config --global user.name yanjun2003
+  175  git commit -m "modify the layout of mainactivity"
+  176  git push origin master 
+  177  ls
+  178  cd student/
+  179  ls
+  180  cd bin/
+  181  ls
+  182  cd classes/
+  183  ls
+  184  javah -jni jni_rule.Rules_Activity
+  185  javap -s -private  jni_rule.Rules_Activity
+  186  ls
+  187  cd git_dir/
+  188  ls
+  189  cd ReadMe/
+  190  ls
+  191  cd student/
+  192  ls
+  193  cd bin 
+  194  cd cla
+  195  cd classes/
+  196  ls
+  197  javap -s -private  jni_rule.Rules_Activity
+  198  cd ..
+  199  rm student/
+  200  ls -al
+  201  git checkout .
+  202  ls
+  203  git log .
+  204  git pull origin master 
+  205  sudo pppoeconfig
+  206  sudo pppoeconf
+  207  ping sina.com
+  208  l
+  209  cd /etc/ppp/
+  210  ls
+  211  ls -al
+  212  cd ..
+  213  cd ~
+  214  ls
+  215  cd git_dir/
+  216  ls
+  217  cd ReadMe/
+  218  ls
+  219  cd student/
+  220  ls
+  221  git status .
+  222  git diff src/com/example/student/MainActivity.java
+  223  git reset src/com/example/student/MainActivity.java
+  224  git stutus .
+  225  git status .
+  226  git diff res/layout/activity_main.xml
+  227  ssh 192.168.88.51
+  228  sudo pppoeconf
+  229  ping sina.com
+  230  ls
+  231  cd /etc/ppp/
+  232  ls
+  233  ping sina.com
+  234  cd git_dir/
+  235  ls
+  236  cd ReadMe/
+  237  ls
+  238  git status .
+  239  git diff student/src/com/example/student/MainActivity.java
+  240  rm student/src/com/example/student/MainActivity.java
+  241  git checkout .
+  242  git status .
+  243  git log .
+  244  git status .
+  245  git diff student/res/layout/activity_main.xml
+  246  ps -ef
+  247  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BC8EBFE8
+  248  deb http://ppa.launchpad.net/network-manager/trunk/ubuntu karmic main
+  249  deb-src http://ppa.launchpad.net/network-manager/trunk/ubuntu karmic main
+  250  sudo aptitude update
+  251  sudo aptitude safe-upgrade
+  252  cd /etc/NetworkManager/
+  253  ls
+  254  cd /etc/network/
+  255  ls
+  256  sudo gedit interfaces
+  257  ping 192.168.89.51
+  258  ping 192.168.88.51
+  259  cd .
+  260  cd ..
+  261  cd ~
+  262  ls
+  263  mv 公司人员通讯录11.20.xlsx share/
+  264  ls
+  265  cd share/
+  266  ls
+  267  cd a526Ev42_2/
+  268  ls
+  269  cd android/
+  270  ls
+  271  grep -nr "_nativeClassInit" *
+  272  ls
+  273  cd git_dir/
+  274  ls
+  275  cd ReadMe/
+  276  ls
+  277  cd student/
+  278  ls
+  279  git status .
+  280  ls
+  281  git diff res/layout/activity_main.xml
+  282  git add .
+  283  git commit -m "modify the mainactivity layout "
+  284  git push origin master 
+  285  cd ..
+  286  ls
+  287  rm Readme~
+  288  ls
+  289  git status .
+  290  git diff Readme
+  291  ls
+  292  gedit Readme 
+  293  git add .
+  294  git commit -m "modify the Readme file"
+  295  git push origin master 
+  296  git pull origin  master 
+  297  git log -p -2
+  298  exit
+  299  sudo do-release-upgrade -d
+  300  ls
+  301  cd share/
+  302  ls
+  303  cd a526Ev42_2/
+  304  ls
+  305  cd lichee/
+  306  ./build.sh
+  307  cd ../android/
+  308  source build/envsetup.sh 
+  309  lunch
+  310  extract-bsp
+  311  make
+  312  pack
+  313  extract-bsp
+  314  make
+  315  sudo apt-get install git-core curl
+  316  make
+  317  java -version
+  318  make
+  319  pack
+  320  make clean
+  321  source build/envsetup.sh 
+  322  lunch
+  323  extract-bsp
+  324  make
+  325  pack
+  326  cd git_dir/
+  327  s
+  328  ls
+  329  git clone https://github.com/yuanxinyu/Linux-0.11.git
+  330  ls
+  331  cd Linux-0.11/
+  332  ls
+  333  make
+  334  git log .
+  335  git log -p -6
+  336  cd ..
+  337  ls
+  338  rm -rf Linux-0.11/
+  339  ls
+  340  git clone https://github.com/demuyan/NDKBook_2nd.git
+  341  git clone https://github.com/crescojeff/Ascii2BinString.git
+  342  adb shell
+  343  adb kill-server
+  344  adb shell
+  345  cd /etc/udev/rules.d/
+  346  ls
+  347  sudo chmod a+x 70-android.rules
+  348  ls -al
+  349  rm 70-android.rules~
+  350  sudo rm 70-android.rules~
+  351  lsusb
+  352  adb devices
+  353  adb shell
+  354  cd ..
+  355  ls
+  356  cd ..
+  357  cd ~
+  358  ls
+  359  cd work
+  360  ls
+  361  cd ..
+  362  ls
+  363  cd workspace/
+  364  ls
+  365  cd AscilltoBin/
+  366  ls
+  367  cd bin/
+  368  ls
+  369  cd classes/
+  370  ls
+  371  javah -jni com.yanjun.ascilltobin.math.StringConverter
+  372  cd ..
+  373  ls
+  374  cd ..
+  375  ls
+  376  cd share/
+  377  ls
+  378  cd a526Ev42_2/
+  379  ls
+  380  cd f
+  381  cd android/
+  382  cd frameworks/
+  383  ls
+  384  grep -nr "JNI_OnLoad" *
+  385  cd ~
+  386  ls
+  387  cd workspace/
+  388  ls
+  389  cd AscilltoBin/
+  390  slc
+  391  ls
+  392  cd bin/
+  393  ls
+  394  cd classes/
+  395  ls
+  396  javah -jni com.yanjun.ascilltobin.math.StringConverter
+  397  adb reboot
+  398  cd git_dir/
+  399  s
+  400  ls
+  401  cd ReadMe/
+  402  sl
+  403  cdls
+  404  cd student/
+  405  ls
+  406  ls -al
+  407  gedit .gitignore 
+  408  cd ..
+  409  ls
+  410  cd AscilltoBin/
+  411  ls
+  412  touch .gitignore
+  413  gedit .gitignore 
+  414  cd ..
+  415  git status .
+  416  git add AscilltoBin/
+  417  git status .
+  418  git commit -m "add a c++ and JNI DEMO"
+  419  git status .
+  420  git push origin master 
+  421  rm *
+  422  rm -rf *
+  423  git checkout .
+  424  ls
+  425  cd AscilltoBin/
+  426  ls
+  427  cd ..
+  428  ls
+  429  rm Ascii2BinString/
+  430  rm -rf Ascii2BinString/
+  431  ls
+  432  cd NDK_Practice/
+  433  ls
+  434  git remove tutorial2/
+  435  git status .
+  436  git add .
+  437  git commit -a -m "delete unuse project"
+  438  git push origin master 
+  439  cd ..
+  440  ls
+  441  cd NDKBook_2nd/
+  442  ls
+  443  sudo gedit /etc/profile
+  444  ls
+  445  cd ch
+  446  cd ch02/
+  447  ls
+  448  cd JniApp/
+  449  ls
+  450  cd jni/
+  451  ls
+  452  ndk-build
+  453  cd git_dir/
+  454  ls
+  455  cd NDKBook_2nd/
+  456  cd ..
+  457  rm NDK_Practice/
+  458  rm -rf NDK_Practice/
+  459  ls
+  460  cd NDKBook_2nd/
+  461  ls
+  462  cd ch02/
+  463  ls
+  464  cd JniApp/
+  465  ls
+  466  cd jni
+  467  ndk-build
+  468  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libaddapp-jni.so' '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libcheckjni-jni.so' '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libexception-jni.so' '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libjava-jni.so' '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libjavastring-jni.so' '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libjnireference-jni.so' '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libjnitoast-jni.so' '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libnio-jni.so' '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libprimitive-jni.so'  /system/lib
+  469  adb shell
+  470  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/obj/local/armeabi/libaddapp-jni.so'  /system/lib
+  471  adb shell
+  472  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libaddapp-jni.so'  /system/lib
+  473  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libcheckjni-jni.so'  /system/lib
+  474  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libexception-jni.so'  /system/lib
+  475  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libjava-jni.so' /system/lib
+  476  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libjavastring-jni.so'  /system/lib
+  477  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libjnireference-jni.so'  /system/lib
+  478  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libjnitoast-jni.so'  /system/lib
+  479  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libnio-jni.so'  /system/lib
+  480  ad push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libprimitive-jni.so'  /system/lib
+  481  adb push '/home/yanjun/git_dir/NDKBook_2nd/ch02/JniApp/libs/armeabi/libprimitive-jni.so'  /system/lib
+  482  adb shell
+  483  ld
+  484  ls
+  485  cd ..
+  486  cd .
+  487  cd ..
+  488  ls
+  489  cd tool/
+  490  ls
+  491  gedit cutcode.rb 
+  492  cd ..
+  493  ls
+  494  adb shell
+  495  adb reboot
+  496  lsusb
+  497  adb shell
+  498  adb devices
+  499  lsusb
+  500  adb shell
+  501  lsusb
+  502  sudo apt-get autoclean
+  503  df
+  504  adb shell
+  505  sudo apt-get install wine
+  506  sudo apt-get autoclean
+  507  df
+  508  adb shell
+  509  cd share/
+  510  cd a526Ev42_2/
+  511  ls
+  512  cd android/
+  513  grep -nr "android.settings.WIRELESS_SETTINGS" *
+  514  lsusb
+  515  adb shell
+  516  lsusb
+  517  sudo gedit /etc/udev/rules.d/
+  518  sudo gedit /etc/udev/rules.d/70-android.rules 
+  519  adb devices
+  520  adb kill-server
+  521  adb shell
+  522  adb devices
+  523  sudo gedit /etc/udev/rules.d/70-android.rules 
+  524  adb shell
+  525  sudo apt-get autoclean
+  526  cd /etc/ppp/peers
+  527  ls
+  528  ls -al
+  529  sudo gedit dsl-provider 
+  530  ping sina.com -t
+  531  ping sina.com
+  532  ping www.sina.com
+  533  cd ..
+  534  cd ~
+  535  ls
+  536  cd git_dir/
+  537  ls
+  538  git clone git@192.168.88.59:epg-bundle/iepg
+  539  cd /etc/ppp/peers/
+  540  ls
+  541  rm *
+  542  sudo rm *
+  543  ls
+  544  cd ..
+  545  sudo poff
+  546  sudo service network restart
+  547  plog
+  548  sudo pppoeconf
+  549  ipconfig
+  550  ifocnfig
+  551  ifconfig
+  552  reboot
+  553  sudo reboot
+  554  adb shell
+  555  ping sina.com
+  556  reboot
+  557  sudo reboot
+  558  cd /etc/NetworkManager/
+  559  ls
+  560  ls -al
+  561  cd dnsmasq.d/
+  562  ls
+  563  cd ..
+  564  ls
+  565  sudo gedit NetworkManager.conf 
+  566  sudo service network-manager restart
+  567  ping sina.com
+  568  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BC8EBFE8
+  569  cd ..
+  570  ls
+  571  cd network/
+  572  ls
+  573  cd interfaces.d/
+  574  cd ..
+  575  ls
+  576  gedit interfaces
+  577  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BC8EBFE8
+  578  cd ~
+  579  ls
+  580  adb shell
+  581  lspci
+  582  cd /etc/NetworkManager/
+  583  ls
+  584  sudo gedit NetworkManager.conf
+  585  lspci -n | grep  WiFi Adapter
+  586  lspci -n | grep  WiFi
+  587  lspci -n | grep "WiFi Adapter"
+  588  sudo apt-get install wine
+  589  cd git_dir/
+  590  ls
+  591  git clone https://github.com/johannilsson/android-actionbar.git
+  592  sudo service network-manager restart
+  593  sudo pon
+  594  cd /etc/ppp/peers/
+  595  ls
+  596  touch provider
+  597  sudo touch provider
+  598  ls
+  599  sudo apt-get install wicd
+  600  sudo /etc/init.d/networking restart
+  601  ping sina.com
+  602  ifconfig
+  603  ping sina.com
+  604  ls
+  605  cd git_dir/
+  606  ls
+  607  rm android-actionbar/
+  608  rm -rf android-actionbar/
+  609  adb install android.hardware.wifi.direct
+  610  sudo uninstall com.example.android.wifidirect
+  611  adb uninstall com.example.android.wifidirect
+  612  adb shell
+  613  www.ping sina.com
+  614  ping sina.com
+  615  adb shell
+  616  sudo service network-manager restart
+  617  ifconfig
+  618  adb shell
+  619  sudo apt-get remove gitg
+  620  sudo apt-get autoclean
+  621  df
+  622  sudo apt-get autoclean
+  623  sudo apt-get remove gitg
+  624  sudo apt-get autoclean
+  625  adb shell
+  626  ls
+  627  clean
+  628  clear
+  629  histroy
+  630  hisory
+  631  history
+  632  pwd
+  633  pwd > mhistory.txt
+  634  history > mhistory.txt
+  635  cd git_dir/
+  636  ls
+  637  cd ReadMe/
+  638  ls
+  639  git status 
+  640  git diff AscilltoBin/jni/Ascii2Bin_src/math/Ascii2Bin_JNI.cpp
+  641  git add .
+  642  git commit -m "add history of command"
+  643  git pull origin master 
+  644  ls
+  645  git push origin master 
+  646  cd ~/share/
+  647  ls
+  648  cd a526Ev42_2/
+  649  s
+  650  cd android/
+  651  cp ./development/ide/eclipse/.classpath ./
+  652  ls
+  653  ls -al
+  654  chmod +w .classpath 
+  655  ls
+  656  pwd
+  657  sudo service network-manager restart
+  658  ping sina.com 
+  659  adb reboot
+  660  sudo service network-manager restart
+  661  ls
+  662  cd git_dir/
+  663  ls
+  664  cd ReadMe/
+  665  ls
+  666  cd student/
+  667  ls -al
+  668  sudo gedit  .gitignore 
+  669  cd ..
+  670  ls
+  671  cd wifiDirect/
+  672  ls
+  673  touch .gitignore
+  674  gedit .gitignore 
+  675  cd ..
+  676  git status .
+  677  git add wifiDirect/
+  678  git commit -m "add the wifi p2p demo"
+  679  git push  origin master 
+  680  adb shell
+  681  adb reboot
+  682  reboot
+  683  sudo reboot
+  684  cd /etc/NetworkManager/
+  685  ls
+  686  sudo gedit NetworkManager.conf
+  687  cd system-connections/
+  688  ls
+  689  ls -al
+  690  cd ..
+  691  ls
+  692  cd VPN/
+  693  ls
+  694  sudo gedit nm-pptp-service.name 
+  695  cd ..
+  696  ls
+  697  cd ls -al net*
+  698  cd network
+  699  ls
+  700  sudo gedit interfaces
+  701  reboot
+  702  sudo reboot
+  703  ls
+  704  cd git_dir/
+  705  ls
+  706  cd ReadMe/
+  707  ls
+  708  cd wifiDirect/
+  709  ls
+  710  git status .
+  711  adb reboot
+  712  ping sina.com
+  713  ls
+  714  git status .
+  715  ls
+  716  git add .
+  717  git commit -m "connect Automaticall tag "
+  718  git tag 
+  719  git tag -a v1.0 -m "wifi p2p connect successfully,and the next step is to add transfer messages"
+  720  git tag -a v1.1 -m "wifi p2p connect successfully,and the next step is to add transfer messages"
+  721  git tag
+  722  git show tag 1.1
+  723  git show v1.1
+  724  ls
+  725  cd ..
+  726  ls
+  727  cd android_env/
+  728  ls
+  729  history > history2.txt
