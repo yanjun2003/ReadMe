@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sunlight.wifidirect.MainActivity" >
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+    <LinearLayout
+        android:id="@+id/Buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" 
+        android:orientation="horizontal" >
+
+        <Button 
+            android:id="@+id/connect"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/connect"
+            />
+        
+        <Button 
+            android:id="@+id/disconnect"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            style="?android:attr/borderlessButtonStyle"
+             android:text="@string/disconnect"
+            />
+    </LinearLayout>
+    
+    <ListView 
+  		android:id="@+id/peer_list"
+  		android:layout_above="@id/Buttons"
+  		android:layout_below="@id/status"
+  		android:layout_width="match_parent"
+  		android:layout_height="fill_parent"
+    />
+
+</RelativeLayout>

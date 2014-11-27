@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">wifiDirect</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="connect">连接</string>
+    <string name="disconnect">断开</string>
+    
+       <string name="p2p_switch_off_prompt">wifi p2p 没有开启，请开启此功能</string>
+        <string name="p2p_switch_on_prompt">wifi p2p 已经开启</string>
+</resources>
