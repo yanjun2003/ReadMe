@@ -3,6 +3,7 @@ package com.sunlight.wifidirect;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
+import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.util.Log;
 import android.widget.Toast;
@@ -79,9 +81,12 @@ public class WifiDirectBroadCastReceiver extends BroadcastReceiver {
                     .getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
             
             if (networkInfo.isConnected()) {
-
+                Log.d(TAG,
+                        "Connected to p2p network. Requesting network details");
+                manager.requestConnectionInfo(channel,
+                        (ConnectionInfoListener) activity);
             } else {
-         
+            	manager.requestPeers(channel, activity.mP2pListener);
             }
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
         	Log.i(TAG,"4..WIFI_P2P_THIS_DEVICE_CHANGED_ACTION");

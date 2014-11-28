@@ -1,5 +1,6 @@
 package com.sunlight.wifidirect;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,15 @@ import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
+import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,23 +32,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.sunlight.wifidirect.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements   ConnectionInfoListener{
  	private static final String TAG ="MainScreen";
  	private LinearLayout connnectLL, sendLL;
-    private EditText sendText;
+	private EditText sendText;
     private Button sendBtn;
+    static final int SERVER_PORT = 4545;
+    private ChatManager chatManager;
  
  	private Button ConnectBtn,DisconnectBtn;
  	private TextView statusTextView;
  
  	private boolean isPointFound =false;
- 	boolean p2p_connected;
- 
- 
+ 	boolean p2p_connected;  
+ 	
     private WifiP2pManager manager;
     private final IntentFilter intentFilter = new IntentFilter();
     private Channel channel;
@@ -95,12 +102,12 @@ public class MainActivity extends Activity {
 		ConnectBtn=(Button)connnectLL.findViewById(R.id.connect);
 		DisconnectBtn=(Button)connnectLL.findViewById(R.id.disconnect);
 		
+		
 		sendLL=(LinearLayout)findViewById(R.id.sendmessage);
 		sendLL.setVisibility(View.GONE);
 		sendText=(EditText)sendLL.findViewById(R.id.sendinfo);
 		sendBtn =(Button)sendLL.findViewById(R.id.sendbtn);
-		
-		
+		sendBtn.setOnClickListener(MyListener);
 		
 		ConnectBtn.setOnClickListener(MyListener);
 		DisconnectBtn.setOnClickListener(MyListener);
@@ -148,8 +155,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View view) {
 			switch(view.getId()){
-			case R.id.connect:
-				
+			case R.id.connect:	
 				WifiP2pConfig config = new WifiP2pConfig();
 				WifiP2pDevice device = peers.get(0);	
 	            config.deviceAddress = device.deviceAddress;
@@ -171,7 +177,6 @@ public class MainActivity extends Activity {
 				break;
 			case R.id.disconnect:
 				manager.removeGroup(channel, new ActionListener(){
-
 					@Override
 					public void onSuccess() {
 						p2p_connected=false;
@@ -184,6 +189,16 @@ public class MainActivity extends Activity {
 					
 				});
 				break;
+				
+			case R.id.sendbtn:
+			   //发送消息
+				String Msg = sendText.getText().toString();
+				chatManager.write(Msg.getBytes());
+			
+				Toast.makeText(MainActivity.this, "me send : " + Msg,
+                        Toast.LENGTH_SHORT).show();
+				break;
+				
 			}
 		}
 		
@@ -300,6 +315,62 @@ public class MainActivity extends Activity {
 		}
 		
 	}
+
+	
+    public static final int MESSAGE_READ = 0x400 + 1;
+    public static final int MY_HANDLE = 0x400 + 2;
+    public  Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MESSAGE_READ:
+                    byte[] readBuf = (byte[]) msg.obj;
+                    // construct a string from the valid bytes in the buffer
+                    String readMessage = new String(readBuf, 0, msg.arg1);
+                    Log.d(TAG, readMessage);
+                    //(chatFragment).pushMessage("Buddy: " + readMessage);
+                    
+                	Toast.makeText(MainActivity.this, "I recevied : " + readMessage,
+                            Toast.LENGTH_SHORT).show();
+                    break;
+
+                case MY_HANDLE:
+                    Object obj = msg.obj;
+                    Log.i(TAG,"Create a new chatManager");
+                    setChatManager((ChatManager) obj);
+            }
+        }
+    };
+
+    public void setChatManager(ChatManager obj) {
+        chatManager = obj;
+    }
+	@Override
+	public void onConnectionInfoAvailable(WifiP2pInfo p2pInfo) {
+        Thread handler = null;
+ 
+        if (p2pInfo.isGroupOwner) {
+            Log.d(TAG, "Connected as group owner");
+            try {
+                handler = new GroupOwnerSocketHandler(
+                		mHandler);
+                handler.start();
+            } catch (IOException e) {
+                Log.d(TAG,
+                        "Failed to create a server thread - " + e.getMessage());
+                return;
+            }
+        } else {
+            Log.d(TAG, "Connected as peer");
+            handler = new ClientSocketHandler(
+            		mHandler,
+                    p2pInfo.groupOwnerAddress);
+            handler.start();
+        }
+    /*    chatFragment = new WiFiChatFragment();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container_root, chatFragment).commit();*/
+    }
 
 	
 }
