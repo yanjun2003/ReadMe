@@ -1,0 +1,309 @@
+    1  sudo gedit /etc/hosts
+    2  ping dl-ssh.google.com
+    3  cd ..
+    4  ls
+    5  sudo mv android-studio-ide-135.1629389-linux.zip /opt
+    6  cd /opt/
+    7  ls
+    8  sudo mv android-studio-ide-135.1629389-linux.zip ~
+    9  cd ~
+   10  ls
+   11  sudo mv -r android-studio/ /opt
+   12  sudo mv -R android-studio/ /opt
+   13  sudo mv -R android-studio /opt
+   14  mv -h
+   15  mv --hlep
+   16  mv --help
+   17  sudo mv -Rf android-studio /opt
+   18  LS
+   19  ls
+   20  tar -zvxf android-studio/ android-studio.tar.gz
+   21  tar -zvcf android-studio/ android-studio.tar.gz
+   22  tar -cvf  android-studio.tar.gz android-studio/
+   23  ls
+   24  sudo mv android-studio.tar.gz /opt/
+   25  ls
+   26  rm -rf android-studio/
+   27  ls
+   28  cd /opt/
+   29  ls
+   30  sudo tar -zvxf android-studio.tar.gz 
+   31  ls
+   32  rm android-studio.tar.gz 
+   33  sudo rm android-studio.tar.gz 
+   34  cd ~
+   35  ls
+   36  tar -cvf android-studid.tar android-studio/
+   37  sudo mv android-studid.tar /opt/
+   38  cd /opt/
+   39  ls
+   40  sudo tar -vxf android-studid.tar 
+   41  ls -al
+   42  ls
+   43  cd ~
+   44  ls
+   45  sudo mv jdk-7u71-linux-x64.tar.gz /opt/
+   46  cd /opt/
+   47  ls
+   48  tar -zvxf jdk-7u71-linux-x64.tar.gz 
+   49  sudo tar -zvxf jdk-7u71-linux-x64.tar.gz 
+   50  ls
+   51  cd android-studio/bin/
+   52  sudo ./studio.sh 
+   53  cd ..
+   54  ls
+   55  cd jdk1.7.0_71/
+   56  ls
+   57  pwd
+   58  sudo gedit /etc/profile
+   59  sudo apt-get install flashplay
+   60  sudo apt-get update
+   61  sudo apt-get install git
+   62  ls
+   63  mkdir github_dir
+   64  cd github_dir/
+   65  git clone https://github.com/yanjunbill/first.git
+   66  ls
+   67  java -version
+   68  cd /ope
+   69  cd /opt
+   70  ls
+   71  cd android-studio/bin/
+   72  ./studio.sh 
+   73  sudo apt-get autoclean
+   74  cd ~
+   75  ld
+   76  ls
+   77  mkdir DownLoad
+   78  mv android-studio-ide-135.1629389-linux.zip DownLoad/
+   79  ls
+   80  sudo apt-get autoclean
+   81  sudo apt-get remove flashplayer
+   82  sudo apt-get autoremove
+   83  ls
+   84  cd Android/Sdk/platform-tools/
+   85  pwd
+   86  ls
+   87  pwd
+   88  sudo gedit /etc/profile
+   89  adb shell
+   90  sudo adb 
+   91  adb 
+   92  ls
+   93  cd android-studio/
+   94  ls
+   95  cd bin/
+   96  ./studio.sh 
+   97  sudo gedit /etc/profile
+   98  sudo ~/.bash.rc
+   99  cd ~
+  100  touch ./bashrc
+  101  sudo gedit ./bashrc 
+  102  source .bashrc 
+  103  adb shell
+  104  ndk-build
+  105  sudo gedit /etc/profile
+  106  ls
+  107  cd android-studio/
+  108  ls
+  109  cd a
+  110  ls
+  111  cd bin/
+  112  ls
+  113  ./studio.sh 
+  114  ls
+  115  cd ..
+  116  ls
+  117  rm -rf android-studio/
+  118  ls
+  119  cd /opt/
+  120  ls
+  121  sudo rm -rf android-studio
+  122  ls
+  123  sudo cp android-studid.tar ~/
+  124  cd ~
+  125  ls
+  126  cd android-studio/
+  127  ls
+  128  cd bin/
+  129  ls
+  130  ./studio.sh 
+  131  cd ..
+  132  ls
+  133  rm -rf Android/
+  134  cd android-studio/bin/
+  135  ./studio.sh 
+  136  ls
+  137  cd ..
+  138  ls
+  139  rm -rf android-studio
+  140  ls
+  141  ndkbuild
+  142  ndk-build
+  143  cd..
+  144  ls
+  145  cd ..
+  146  ls
+  147  cd ..
+  148  cd android-ndk-r10d/
+  149  l
+  150  ls 
+  151  cd samples/
+  152  ls
+  153  cd hello-jni/
+  154  ls
+  155  cd jni
+  156  ndk-build
+  157  cd ..
+  158  ls
+  159  rm libs/
+  160  rm -rf libs/
+  161  ls
+  162  cd ~
+  163  sudo apt-get update
+  164  cd android-studio/
+  165  ls
+  166  cd bin/
+  167  ls
+  168  ./studio.sh 
+  169  sudo gedit /etc/profile
+  170  ls
+  171  cd ..
+  172  ls
+  173  cd ~
+  174  ls
+  175  cd adt-bundle-linux/
+  176  ls
+  177  sdk
+  178  ls
+  179  cd sdk/
+  180  ls
+  181  cd platform
+  182  cd platform-tools/
+  183  pwd
+  184  sudo gedit /etc/profile
+  185  ls
+  186  rm android-studio-ide-135.1629389-linux.zip 
+  187  ls
+  188  adb shell
+  189  cd adt-bundle-linux/sdk/platform-tools/
+  190  ls
+  191  ./adb 
+  192  ls -al
+  193  chmod a+x adb
+  194  ./adb
+  195  .adb 
+  196  sudo apt-get install android-tools-adb
+  197  adb shell
+  198  sudo gedit /etc/profile
+  199  adb shell
+  200  lsusb
+  201  cd ~
+  202  ls
+  203  ls -al
+  204  cd .android/
+  205  ls
+  206  lsusb
+  207  echo 0x1f3a > adb_usb.ini
+  208  adb shell
+  209  adb devices
+  210  ls
+  211  adb shell
+  212  cd /etc/udev/rules.d/
+  213  ls
+  214  ls -al
+  215  sudo chmod a+rx 51-android.rules 
+  216  sudo servcie udev restart
+  217  sudo service udev restart
+  218  adb kill-server
+  219  adb shell
+  220  cd ~
+  221  ls
+  222  cd adt-bundle-linux/
+  223  ls
+  224  cd sdk/
+  225  ls
+  226  cd platform
+  227  cd platform-tools/
+  228  adb 
+  229  adb shell
+  230  exit
+  231  adb connect 192.168.89.138
+  232  adb connect 192.168.89.138
+  233  adb connect 192.168.89.138
+  234  adb connect 192.168.89.138
+  235  adb connect 192.168.89.138
+  236  adb connect 192.168.89.138
+  237  adb connect 192.168.89.147
+  238  adb connect 192.168.88.147
+  239  adb connect 192.168.89.176
+  240  sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-dri:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 dpkg-dev
+  241  sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-dri:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 dpkg-dev
+  242  cd ~/github_dir/
+  243  git clone https://github.com/yanjun2003/ReadMe.git
+  244  sudo apt-get install uboot-mkimage
+  245  sudo apt-get install u-boot-tools
+  246  git clone https://github.com/yanjunbill/NDK_practice.git
+  247  git clone git@192.168.88.59:epg-bundle/iepg
+  248  adb shell
+  249  sudo apt-get autoclean
+  250  sudo apt-get autoremove
+  251  ls -al
+  252  rm .bashrc
+  253  rm -rf .android/
+  254  ls
+  255  ls -al
+  256  cd android-studio/
+  257  cd bin/
+  258  ls
+  259  ./studio.sh 
+  260  sudo apt-get remove android-tool-adb
+  261  history
+  262  sudo apt-get remove android-tools-adb
+  263  cd ~/adt-bundle-linux/sdk/platform-tools/
+  264  pwd
+  265  sudo gedit /etc/profile
+  266  ls -al
+  267  cd /etc/profile.d/
+  268  cd ..
+  269  ls -al
+  270  rm profile~
+  271  sudo rm profile~
+  272  cd ..
+  273  ls
+  274  cd ..
+  275  ls
+  276  cd ..
+  277  ls
+  278  cd ~
+  279  ls
+  280  cd android-studio/bin/
+  281  ./studio.sh 
+  282  adb shell
+  283  adb uninstall com.example.student
+  284  adb reboot
+  285  sudo gedit
+  286  ls
+  287  cd ..
+  288  cd ..
+  289  cd ~
+  290  ls
+  291  adb connect 192.168.89.138
+  292  adb shell
+  293   apt-get install ibus-table-wubi
+  294  sudo  apt-get install ibus-table-wubi
+  295  System-Preferences - Keyboard Input Methods
+  296  sudo apt-get install scim-pinyin
+  297  sudo apt-get install scim-tables-zh
+  298  cd android-studio/bin/
+  299  ./studio.sh 
+  300  ./studio.sh 
+  301  cd android-studio/
+  302  cd b
+  303  cd bin/
+  304  ./studio.sh 
+  305  cd ~/github_dir/ReadMe/
+  306  ls
+  307  cd android_env/
+  308  ls
+  309  history > history3.txt 
